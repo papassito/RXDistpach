@@ -1,0 +1,13 @@
+FROM golang:1.22-alpine AS builder
+WORKDIR /app
+COPY go.mod ./
+COPY internal ./internal
+COPY cmd/result ./cmd/result
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o rx-result ./cmd/result
+
+FROM alpine:3.19
+RUN apk --no-cache add ca-certificates curl
+WORKDIR /app
+COPY --from=builder /app/rx-result .
+EXPOSE 8086
+ENTRYPOINT ["/app/rx-result"]

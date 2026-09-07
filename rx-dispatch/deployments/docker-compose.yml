@@ -1,0 +1,139 @@
+version: '3.8'
+
+services:
+  rx-security:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.security
+    container_name: rx-security
+    ports:
+      - "8081:8081"
+    environment:
+      - RX_SECURITY_PORT=8081
+    restart: unless-stopped
+
+  rx-audit:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.audit
+    container_name: rx-audit
+    ports:
+      - "8088:8088"
+    environment:
+      - RX_AUDIT_PORT=8088
+    restart: unless-stopped
+
+  rx-storage:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.storage
+    container_name: rx-storage
+    ports:
+      - "8083:8083"
+    environment:
+      - RX_STORAGE_PORT=8083
+    restart: unless-stopped
+
+  rx-study:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.study
+    container_name: rx-study
+    ports:
+      - "8082:8082"
+    environment:
+      - RX_STUDY_PORT=8082
+      - RX_AUDIT_URL=http://rx-audit:8088
+    depends_on:
+      - rx-audit
+    restart: unless-stopped
+
+  rx-image:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.image
+    container_name: rx-image
+    ports:
+      - "8084:8084"
+    environment:
+      - RX_IMAGE_PORT=8084
+      - RX_STORAGE_URL=http://rx-storage:8083
+      - RX_AUDIT_URL=http://rx-audit:8088
+    depends_on:
+      - rx-storage
+      - rx-audit
+    restart: unless-stopped
+
+  rx-reader:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.reader
+    container_name: rx-reader
+    ports:
+      - "8085:8085"
+    environment:
+      - RX_READER_PORT=8085
+      - RX_AUDIT_URL=http://rx-audit:8088
+    depends_on:
+      - rx-audit
+    restart: unless-stopped
+
+  rx-result:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.result
+    container_name: rx-result
+    ports:
+      - "8086:8086"
+    environment:
+      - RX_RESULT_PORT=8086
+      - RX_STORAGE_URL=http://rx-storage:8083
+      - RX_AUDIT_URL=http://rx-audit:8088
+    depends_on:
+      - rx-storage
+      - rx-audit
+    restart: unless-stopped
+
+  rx-delivery:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.delivery
+    container_name: rx-delivery
+    ports:
+      - "8087:8087"
+    environment:
+      - RX_DELIVERY_PORT=8087
+      - RX_STUDY_URL=http://rx-study:8082
+      - RX_AUDIT_URL=http://rx-audit:8088
+    depends_on:
+      - rx-study
+      - rx-audit
+    restart: unless-stopped
+
+  rx-gateway:
+    build:
+      context: ..
+      dockerfile: deployments/Dockerfile.gateway
+    container_name: rx-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - RX_GATEWAY_PORT=8080
+      - RX_SECURITY_URL=http://rx-security:8081
+      - RX_STUDY_URL=http://rx-study:8082
+      - RX_STORAGE_URL=http://rx-storage:8083
+      - RX_IMAGE_URL=http://rx-image:8084
+      - RX_READER_URL=http://rx-reader:8085
+      - RX_RESULT_URL=http://rx-result:8086
+      - RX_DELIVERY_URL=http://rx-delivery:8087
+      - RX_AUDIT_URL=http://rx-audit:8088
+    depends_on:
+      - rx-security
+      - rx-study
+      - rx-storage
+      - rx-image
+      - rx-reader
+      - rx-result
+      - rx-delivery
+      - rx-audit
+    restart: unless-stopped

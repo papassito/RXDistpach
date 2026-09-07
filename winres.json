@@ -1,0 +1,16 @@
+{
+  "RT_GROUP_ICON": {
+    "APP": {
+      "0": "assets/app.ico"
+    }
+  },
+  "RT_MANIFEST": {
+    "#1": {
+      "identity": {
+        "name": "RX DISPATCH Edge Appliance",
+        "version": "2.0.0.0"
+      },
+      "description": "RX DISPATCH Medical Imaging & Result Delivery Engine"
+    }
+  }
+}

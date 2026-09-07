@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ico-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F2FE" />
+      <stop offset="100%" stop-color="#4FACFE" />
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="52" fill="#0B132B" stroke="#3A506B" stroke-width="8" />
+  <path d="M 152 44 L 76 144 L 122 144 L 88 212 L 180 112 L 134 112 Z" fill="url(#ico-cyan)" />
+</svg>

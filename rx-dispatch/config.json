@@ -1,0 +1,27 @@
+{
+  "server": {
+    "environment": "production_edge",
+    "http_port": 8090,
+    "dicom_port": 11112,
+    "ae_title": "RX_DISPATCH",
+    "allowed_calling_ae_titles": ["MODALITY_RX", "SIEMENS_DX", "GE_XR"]
+  },
+  "storage": {
+    "data_dir": "./storage_data",
+    "originals_dir": "./storage_data/originals",
+    "derivatives_dir": "./storage_data/derivatives",
+    "retention_days_derivatives": 30,
+    "disk_watermark_free_gb": 5.0,
+    "auto_purge_enabled": true
+  },
+  "delivery": {
+    "max_retries": 5,
+    "retry_backoff_seconds": 10,
+    "store_and_forward_queue_db": "./storage_data/delivery_queue.db",
+    "worker_pool_size": 4
+  },
+  "reader": {
+    "force_disclaimer": true,
+    "allow_diagnostic_labels": false
+  }
+}
