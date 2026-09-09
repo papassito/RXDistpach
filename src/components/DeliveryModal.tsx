@@ -43,7 +43,7 @@ export const DeliveryModal: React.FC<DeliveryModalProps> = ({
     } else if (newChannel === "WHATSAPP") {
       setRecipient(study.patient.phone || "+34 612 345 678");
     } else {
-      setRecipient(`https://rxdispatch.salud.org/portal/${study.studyIdentifier}`);
+      setRecipient(`https://rxdispatch.solsuol.net/portal/${study.studyIdentifier}`);
     }
   };
 

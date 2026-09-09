@@ -62,7 +62,7 @@ export const ResultBuilderView: React.FC<ResultBuilderViewProps> = ({
 <body>
   <div class="header">
     <div>
-      <h2 style="margin: 0; color: #0f172a;">RX DISPATCH BY KLIK</h2>
+      <h2 style="margin: 0; color: #0f172a;">RX DISPATCH BY KLIK SOFT PRO</h2>
       <small style="color: #64748b;">Sistema de Envío de Resultados e Imágenes de Rayos X</small>
     </div>
     <div>
@@ -114,7 +114,7 @@ export const ResultBuilderView: React.FC<ResultBuilderViewProps> = ({
       folder?.file("resultado.html", htmlContent);
 
       // 2. lectura-generica.txt
-      const txtContent = `RX DISPATCH BY KLIK - LECTURA GENÉRICA DE LA IMAGEN
+      const txtContent = `RX DISPATCH BY KLIK SOFT PRO - LECTURA GENÉRICA DE LA IMAGEN
 =========================================================
 ESTUDIO: ${study.studyType}
 IDENTIFICADOR: ${study.studyIdentifier}
@@ -305,7 +305,7 @@ Integrity status: Preserved original unaltered.`
             <div className="flex justify-between items-start border-b-2 border-sky-600 pb-3">
               <div>
                 <h3 className="text-lg font-black text-slate-900 tracking-tight">
-                  RX DISPATCH BY KLIK
+                  RX DISPATCH BY KLIK SOFT PRO
                 </h3>
                 <p className="text-xs text-slate-500">
                   Sistema de Envío de Resultados e Imágenes de Rayos X
@@ -433,7 +433,7 @@ Integrity status: Preserved original unaltered.`
               <div><strong>Paciente:</strong> {study.patient.fullName}</div>
               <div className="flex items-center space-x-2 text-sky-400 mt-2">
                 <PhoneCall className="w-3.5 h-3.5" />
-                <span>Central de Radiología: +34 900 123 456 (Ext. 204)</span>
+                <span>Soporte CM Soluciones: +34 900 123 456 (Ext. 204)</span>
               </div>
             </div>
 

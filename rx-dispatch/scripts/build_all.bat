@@ -1,6 +1,6 @@
 @echo off
 echo ==========================================================
-echo RX DISPATCH BY KLIK - Independent Microservices Builder
+echo RX DISPATCH BY KLIK SOFT PRO - Independent Microservices Builder
 echo Architecture: 100% Go, Decoupled, Zero-Monolith
 echo ==========================================================
 

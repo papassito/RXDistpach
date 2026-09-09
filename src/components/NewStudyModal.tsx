@@ -25,7 +25,7 @@ export const NewStudyModal: React.FC<NewStudyModalProps> = ({
   const [patientId, setPatientId] = useState("");
   const [anatomicalRegion, setAnatomicalRegion] = useState("Tórax");
   const [studyType, setStudyType] = useState("Radiografía de Tórax PA");
-  const [physician, setPhysician] = useState("Dra. Beatriz Morales");
+  const [physician, setPhysician] = useState("Dr. Solicitante Asignado");
   const [indication, setIndication] = useState("Evaluación radiográfica preventiva de control.");
   const [imageDataUrl, setImageDataUrl] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
@@ -147,7 +147,7 @@ export const NewStudyModal: React.FC<NewStudyModalProps> = ({
                 required
                 value={patientName}
                 onChange={(e) => setPatientName(e.target.value)}
-                placeholder="Ej. Roberto Díaz Cano"
+                placeholder="Ej. Nombre Apellido"
                 className="w-full bg-slate-950 border border-slate-800 rounded px-2.5 py-1.5 text-white focus:outline-none focus:border-sky-500"
               />
             </div>

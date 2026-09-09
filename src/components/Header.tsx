@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
                 RX DISPATCH
               </span>
               <span className="text-xs font-semibold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
-                BY KLIK
+                BY KLIK SOFT PRO
               </span>
               <span className="hidden md:inline-flex items-center space-x-1 text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">
                 <ShieldCheck className="w-3 h-3" />

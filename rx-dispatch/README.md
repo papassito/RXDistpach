@@ -1,4 +1,4 @@
-# RX DISPATCH BY KLIK
+# RX DISPATCH BY KLIK SOFT PRO
 ## Sistema de Envío de Resultados e Imágenes de Rayos X
 ### Arquitectura: 100% Go · Cero Monolítico · Modular · Desacoplado
 

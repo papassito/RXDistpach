@@ -1,4 +1,4 @@
-# ARQUITECTURA DE RX DISPATCH BY KLIK
+# ARQUITECTURA DE RX DISPATCH BY KLIK SOFT PRO
 ## 100% GO · CERO MONOLÍTICO · MODULAR · DESACOPLADO
 
 El sistema RX DISPATCH ha sido diseñado y construido estrictamente bajo el mandato arquitectónico de cero monolito, eliminando cualquier punto único de ejecución o empaquetado de servicios en un único proceso.
