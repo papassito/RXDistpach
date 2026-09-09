@@ -149,10 +149,10 @@ export const GoCodebaseModal: React.FC<GoCodebaseModalProps> = ({
             {/* Architecture Footer Notice */}
             <div className="p-3 bg-slate-900/60 border-t border-slate-800 text-[10px] text-slate-400 space-y-1">
               <div className="flex items-center space-x-1 text-emerald-400 font-semibold">
-                <ShieldCheck className="w-3 h-3" />
-                <span>Monolítico Modular</span>
+                <Layers className="w-3 h-3" />
+                <span>Modo Edge (Binario Único)</span>
               </div>
-              <p>Un solo binario de alto rendimiento con separación estricta de servicios.</p>
+              <p>Compilación que consolida los 9 servicios en un solo ejecutable, conservando sus fronteras lógicas internas.</p>
             </div>
           </div>
 

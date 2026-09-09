@@ -1,20 +1,27 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# RX DISPATCH 
+**AUTOMATED MEDICAL IMAGING & TECHNICAL EXTRACTION ENGINE**
 
-# Run and deploy your AI Studio app
+**DOCUMENT STATUS:** `AUTHORITATIVE`  
+**AUDIT BASELINE:** `FROZEN NORMATIVE`  
+**CLASSIFICATION:** `MISSION-CRITICAL MIDDLEWARE`  
+**REGULATORY FRAMEWORK ALIGNMENT:** NOM-024-SSA3-2012 (MEX), LFPDPPP (MEX), HIPAA/HITECH (USA), 21 CFR Part 11 (FDA), IEC 62304 (INTL).
 
-This contains everything you need to run your app locally.
+## 1. DECLARACIÓN DE PROPÓSITO Y MARCO REGULATORIO (INTENDED USE)
+RX DISPATCH es un middleware radiológico determinístico implementado en Go. Ejerce funciones operativas de servidor DICOM C-STORE SCP (NEMA PS3), procesando instancias de imagen desde modalidades radiológicas locales, extrayendo metadatos técnicos y orquestando cargas útiles (*payloads*) en una cola de alta resiliencia para su despacho asíncrono.
 
-View your app in AI Studio: https://ai.studio/apps/4037ea8d-1081-43a6-904e-126e54c4183f
+> **⚠️ EXENCIÓN DIAGNÓSTICA Y LÍMITE DE RESPONSABILIDAD CLÍNICA**
+> El uso previsto (*intended use*) del aplicativo se limita estrictamente al transporte de datos técnicos, almacenamiento local, conversión de formatos y extracción de metadatos. **No incluye ni provee algoritmos de interpretación diagnóstica, detección de patologías, ni emisión de juicios clínicos.** La determinación formal de clasificación como dispositivo médico (SaMD / MDDS) queda expresamente sujeta a la evaluación jurídica y aplicabilidad de *predicate rules* ante las agencias regulatorias competentes (COFEPRIS, FDA, EMA).
 
-## Run Locally
+## 2. VECTORES DE EJECUCIÓN (DEPLOYMENT MODES)
+El sistema garantiza coherencia transaccional y cumplimiento de límites de dominio bajo dos topologías estrictas:
+*   **Modo Distribuido:** Ejecución de 9 procesos de dominio aislados, vinculados por ruteo estático interno HTTP (127.0.0.1). 
+*   **Modo Edge:** Binario autocontenido (`rx-dispatch-edge.exe`) que consolida los dominios de servicio conservando fronteras lógicas, diseñado para el despliegue en infraestructura de centro de diagnóstico local.
 
-**Prerequisites:**  Node.js
+## 3. PROTOCOLO DE INICIALIZACIÓN (BOOTSTRAPPING)
+**Requisito Base:** Cadena de herramientas Go versión 1.22+.
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**Secuencia de Compilación:**
+```powershell
+.\scripts\validate_project.ps1
+go build -ldflags="-s -w" -o bin/rx-dispatch-edge.exe ./cmd/gateway
+.\bin\rx-dispatch-edge.exe --config .\config.json
