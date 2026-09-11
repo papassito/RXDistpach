@@ -33,7 +33,7 @@ RX DISPATCH is composed of 9 declared domain services. The evidence level for ea
 ### `rx-reader`
 *   **Responsibility:** Generates a **generic, automated, non-diagnostic reading** and ensures the mandatory injection of the clinical disclaimer.
 *   **Declared Endpoint:** `POST /reader/analyze`
-*   **Evidence Level:** `IMPLEMENTED / STATICALLY VERIFIED`
+*   **Evidence Level:** `DEFINED`
 
 ### `rx-result`
 *   **Responsibility:** Consolidates metadata and generated artifacts into a final result payload.
@@ -45,7 +45,7 @@ RX DISPATCH is composed of 9 declared domain services. The evidence level for ea
 
 ### `rx-audit`
 *   **Responsibility:** Centralized transactional audit log for traceability.
-*   **Evidence Level:** `DEFINED` (The component itself). The consumption of its endpoint by `rx-reader` is `IMPLEMENTED / STATICALLY VERIFIED`.
+*   **Evidence Level:** `DEFINED`
 
 ---
 
@@ -58,8 +58,8 @@ The `rx-dispatch/internal/` directory contains shared logic used across services
 | `internal/config`    | Configuration and service topology loading.  | `DECLARED`                      |
 | `internal/contracts` | Data Transfer Objects (DTOs) for APIs.       | `DECLARED`                      |
 | `internal/models`    | Core domain models (e.g., `GenericReading`). | `DECLARED`                      |
-| `internal/shared`    | Normative constants (e.g., disclaimers).     | `IMPLEMENTED / STATICALLY VERIFIED` |
-| `internal/transport` | HTTP client helpers for inter-service calls. | `PARTIALLY STATICALLY VERIFIED` |
+| `internal/shared`    | Normative constants (e.g., disclaimers).     | `DECLARED`                      |
+| `internal/transport` | HTTP client helpers for inter-service calls. | `DECLARED`                      |
 | `internal/webassets` | Static asset embedding.                      | `DECLARED`                      |
 
 ---

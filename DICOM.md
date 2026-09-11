@@ -4,7 +4,7 @@
 
 Este documento especifica las capacidades DICOM del sistema RX DISPATCH.
 
-## 1. Capacidades Implementadas
+## 1. Capacidades del Sistema
 
 ### C-STORE SCP (Service Class Provider)
 *   **Componente:** `rx-study`

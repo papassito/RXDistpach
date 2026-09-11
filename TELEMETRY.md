@@ -9,7 +9,7 @@ Este documento define los mecanismos de observabilidad y telemetría del sistema
 *   **Endpoint:** `/healthz`
 *   **Disponibilidad:** Todos los 9 microservicios deben exponer este endpoint.
 *   **Responsabilidad:** Proporcionar una señal simple y rápida del estado de salud del servicio.
-*   **Estado:** `IMPLEMENTED / STATICALLY VERIFIED` en `rx-reader`. Se define como un requisito para todos los demás servicios.
+*   **Estado:** `DEFINED` como un requisito para todos los servicios.
 
 **Respuesta (`contracts.HealthResponse`):**
 ```json
@@ -25,9 +25,9 @@ Este documento define los mecanismos de observabilidad y telemetría del sistema
 ## 2. Registros (Logs)
 
 Cada servicio genera registros en la salida estándar (`stdout`) para informar sobre su estado operativo, advertencias y errores. Los registros están prefijados con el nombre del componente (ej. `[RX-READER]`) para facilitar la correlación.
-*   **Estado:** `IMPLEMENTED / STATICALLY VERIFIED` en `rx-reader`.
+*   **Estado:** `DEFINED` como un requisito para todos los servicios.
 
 ## 3. Bitácora de Auditoría (Audit Trail)
 
 El servicio `rx-audit` actúa como un colector centralizado de telemetría de negocio y seguridad. Los eventos enviados por otros servicios (como `generic_reading_generated` de `rx-reader`) constituyen una forma de telemetría de alto nivel que permite trazar el flujo de una transacción a través del sistema.
-*   **Estado:** `IMPLEMENTED / STATICALLY VERIFIED`.
+*   **Estado:** `DEFINED`.

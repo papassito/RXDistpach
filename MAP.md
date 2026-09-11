@@ -17,7 +17,7 @@ RXDistpach/
 │   │   ├── delivery/
 │   │   ├── gateway/
 │   │   ├── image/
-│   │   ├── reader/          # -> Evidence: IMPLEMENTED
+│   │   ├── reader/
 │   │   ├── result/
 │   │   ├── security/
 │   │   ├── storage/
@@ -42,4 +42,4 @@ RXDistpach/
 ## 2. NOTES ON STRUCTURE
 
 *   **`docs/` vs. Root:** This `docs/` directory is being established as the single source of truth for core documentation. Other duplicated documents in the repository are pending consolidation in a later phase.
-*   **`tests/` Directory:** Documentation and scripts reference a `tests/` directory which is currently `MISSING` from the audited scope.
+*   **`tests/` Directory:** The project structure anticipates a `tests/` directory which is currently `MISSING` from the audited scope.

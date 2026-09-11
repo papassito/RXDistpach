@@ -11,7 +11,7 @@ Todos los servicios se comunican mediante HTTP REST con esquemas JSON explícito
 
 ### `POST /reader/analyze`
 Ejecuta la lectura genérica automatizada no diagnóstica.
-*   **Estado:** `IMPLEMENTED / STATICALLY VERIFIED`
+*   **Estado:** `DEFINED`
 
 **Request (`contracts.RequestGenericReadingRequest`):**
 ```json

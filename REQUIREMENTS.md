@@ -8,10 +8,10 @@
 ## 1. `rx-reader` Requirements
 
 *   **REQ-RDR-001 (Non-Diagnostic Output):** The system must provide a component (`rx-reader`) to generate a generic, automated reading that is explicitly not a medical diagnosis.
-    *   **Evidence:** `IMPLEMENTED / STATICALLY VERIFIED`
+    *   **Evidence:** `DEFINED`
 
 *   **REQ-RDR-002 (Mandatory Disclaimer):** Every reading from `rx-reader` must programmatically inject the constants `ReadingTypeGenericAutomated`, `StatusWithoutMedicalSignature`, `MedicalReportNotIncluded`, and the full `MandatoryLegalDisclaimer` text.
-    *   **Evidence:** `IMPLEMENTED / STATICALLY VERIFIED`
+    *   **Evidence:** `DEFINED`
 
 ## 2. Audit & Traceability Requirements
 
@@ -19,7 +19,7 @@
     *   **Evidence:** `DEFINED`
 
 *   **REQ-AUD-002 (Component Event Reporting):** Key components like `rx-reader` must send an audit event (`RecordAuditEventRequest`) to `rx-audit` after their main operation.
-    *   **Evidence:** `IMPLEMENTED / STATICALLY VERIFIED`
+    *   **Evidence:** `DEFINED`
 
 ## 3. Security & Access Requirements
 

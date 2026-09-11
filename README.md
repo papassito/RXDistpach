@@ -9,32 +9,18 @@ RX DISPATCH es un sistema modular de microservicios independientes escrito ínte
 ## Estructura del Proyecto
 
 ```text
-rx-dispatch/
-│
-├── cmd/
-│   ├── gateway/main.go     -> bin/rx-gateway   (Port 8080)
-│   ├── security/main.go    -> bin/rx-security  (Port 8081)
-│   ├── study/main.go       -> bin/rx-study     (Port 8082)
-│   ├── storage/main.go     -> bin/rx-storage   (Port 8083)
-│   ├── image/main.go       -> bin/rx-image     (Port 8084)
-│   ├── reader/main.go      -> bin/rx-reader    (Port 8085)
-│   ├── result/main.go      -> bin/rx-result    (Port 8086)
-│   ├── delivery/main.go    -> bin/rx-delivery  (Port 8087)
-│   └── audit/main.go       -> bin/rx-audit     (Port 8088)
-│
-├── internal/
-│   ├── contracts/          Contratos JSON y DTOs de comunicación
-│   ├── models/             Modelos de dominio del sistema
-│   ├── config/             Variables de entorno y topología
-│   ├── transport/          Cliente y middleware HTTP
-│   └── shared/             Constantes normativas y hashing SHA-256
-│
-├── deployments/            Dockerfiles y docker-compose.yml
-├── scripts/                Scripts de build, start, stop y smoke test
-├── tests/                  Suite de tests (contratos, lector, integridad)
-├── docs/                   Arquitectura, Contratos y Runbook
-├── go.mod
-└── README.md
+RXDistpach/
+├── rx-dispatch/             # Go project root
+│   ├── cmd/                 # Entrypoints for the 9 domain services
+│   ├── internal/            # Shared internal packages
+│   ├── docs/                # Authoritative documentation
+│   ├── scripts/             # Build, execution, and validation scripts
+│   ├── go.mod
+│   └── go.sum
+├── assets/                  # Source for static UI assets
+├── bin/                     # Output for compiled binaries
+├── config.json              # Service topology configuration
+└── README.md                # Project root README
 ```
 
 ---
