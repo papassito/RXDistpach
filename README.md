@@ -1,42 +1,70 @@
-# RX DISPATCH 
-**AUTOMATED MEDICAL IMAGING & TECHNICAL EXTRACTION ENGINE**
+# RX DISPATCH BY KLIK SOFT PRO
+## Sistema de Envío de Resultados e Imágenes de Rayos X
+### Arquitectura: 100% Go · Cero Monolítico · Modular · Desacoplado
 
-**DOCUMENT STATUS:** `AUTHORITATIVE`  
-**AUDIT BASELINE:** `FROZEN NORMATIVE`  
-**CLASSIFICATION:** `MISSION-CRITICAL MIDDLEWARE`  
-**REGULATORY FRAMEWORK ALIGNMENT:** NOM-024-SSA3-2012 (MEX), LFPDPPP (MEX), HIPAA/HITECH (USA), 21 CFR Part 11 (FDA), IEC 62304 (INTL).
+RX DISPATCH es un sistema modular de microservicios independientes escrito íntegramente en lenguaje **Go**, concebido para gestionar la ingesta de estudios radiológicos, asegurar la inmutabilidad de imágenes originales mediante SHA-256, emitir lecturas genéricas automatizadas no diagnósticas con advertencias clínicas obligatorias y realizar el despacho multicanal de resultados a destinatarios autorizados.
 
-## 1. DECLARACIÓN DE PROPÓSITO Y MARCO REGULATORIO (INTENDED USE)
-RX DISPATCH es un middleware radiológico determinístico implementado en Go. Ejerce funciones operativas de servidor DICOM C-STORE SCP (NEMA PS3), procesando instancias de imagen desde modalidades radiológicas locales, extrayendo metadatos técnicos y orquestando cargas útiles (*payloads*) en una cola de alta resiliencia para su despacho asíncrono.
+---
 
-> **⚠️ EXENCIÓN DIAGNÓSTICA Y LÍMITE DE RESPONSABILIDAD CLÍNICA**
-> El uso previsto (*intended use*) del aplicativo se limita estrictamente al transporte de datos técnicos, almacenamiento local, conversión de formatos y extracción de metadatos. **No incluye ni provee algoritmos de interpretación diagnóstica, detección de patologías, ni emisión de juicios clínicos.** La determinación formal de clasificación como dispositivo médico (SaMD / MDDS) queda expresamente sujeta a la evaluación jurídica y aplicabilidad de *predicate rules* ante las agencias regulatorias competentes (COFEPRIS, FDA, EMA).
+## Estructura del Proyecto
 
-## 2. PRINCIPIOS FUNDAMENTALES DEL SISTEMA
-1. **Desacoplamiento Estricto de Dominios**: Ningún proceso concentra toda la lógica. Cada servicio es un binario independiente con su propio punto de entrada `main.go`. La estructura completa del proyecto está definida normativamente en `MAP.md`.
-2. **Inmutabilidad Radiográfica**: La imagen original se sella criptográficamente con SHA-256 en `rx-storage`. El servicio `rx-image` genera derivados para lectura visual, garantizando que el archivo original no sufra alteración lógica.
-3. **Lectura Estrictamente No Diagnóstica**: Todo resultado automatizado se emite con `TYPE: GENERIC_AUTOMATED`, `STATUS: WITHOUT_MEDICAL_SIGNATURE` y una leyenda legal obligatoria que advierte de su naturaleza no clínica.
-4. **Trazabilidad Completa**: El servicio `rx-audit` registra cada paso del ciclo de vida del estudio de forma inmutable, asegurando una cadena de custodia lógica y pericial completa.
+```text
+rx-dispatch/
+│
+├── cmd/
+│   ├── gateway/main.go     -> bin/rx-gateway   (Port 8080)
+│   ├── security/main.go    -> bin/rx-security  (Port 8081)
+│   ├── study/main.go       -> bin/rx-study     (Port 8082)
+│   ├── storage/main.go     -> bin/rx-storage   (Port 8083)
+│   ├── image/main.go       -> bin/rx-image     (Port 8084)
+│   ├── reader/main.go      -> bin/rx-reader    (Port 8085)
+│   ├── result/main.go      -> bin/rx-result    (Port 8086)
+│   ├── delivery/main.go    -> bin/rx-delivery  (Port 8087)
+│   └── audit/main.go       -> bin/rx-audit     (Port 8088)
+│
+├── internal/
+│   ├── contracts/          Contratos JSON y DTOs de comunicación
+│   ├── models/             Modelos de dominio del sistema
+│   ├── config/             Variables de entorno y topología
+│   ├── transport/          Cliente y middleware HTTP
+│   └── shared/             Constantes normativas y hashing SHA-256
+│
+├── deployments/            Dockerfiles y docker-compose.yml
+├── scripts/                Scripts de build, start, stop y smoke test
+├── tests/                  Suite de tests (contratos, lector, integridad)
+├── docs/                   Arquitectura, Contratos y Runbook
+├── go.mod
+└── README.md
+```
 
-## 3. VECTORES DE EJECUCIÓN (DEPLOYMENT MODES)
-El sistema garantiza coherencia transaccional y cumplimiento de límites de dominio bajo dos topologías estrictas:
-*   **Modo Distribuido:** Ejecución de 9 procesos de dominio aislados, vinculados por ruteo estático interno HTTP (127.0.0.1). 
-*   **Modo Edge:** Binario autocontenido (`rx-dispatch-edge.exe`) que consolida los dominios de servicio conservando fronteras lógicas, diseñado para el despliegue en infraestructura de centro de diagnóstico local.
+---
 
-## 4. PROTOCOLO DE INICIALIZACIÓN (BOOTSTRAPPING)
-**Requisito Base:** Cadena de herramientas Go versión 1.22+.
+## Principios Fundamentales del Sistema
 
-**Secuencia de Compilación y Ejecución (Entorno Windows):**
-```powershell
-# 1. Validar el proyecto (formato, tests, dependencias)
-.\scripts\validate_project.ps1
+1. **Cero Monolítico**: Ningún proceso concentra toda la lógica. Cada servicio es un binario independiente con su propio punto de entrada `main.go`.
+2. **Inmutabilidad Radiográfica**: La imagen original se sella criptográficamente con SHA-256 en `RX STORAGE`. `RX IMAGE` genera derivados para lectura visual, garantizando que el archivo original no sufra alteración.
+3. **Lectura Estrictamente No Diagnóstica**:
+   - `TYPE: GENERIC_AUTOMATED`
+   - `STATUS: WITHOUT_MEDICAL_SIGNATURE`
+   - `MEDICAL_REPORT: NOT_INCLUDED`
+   - **Leyenda Legal Obligatoria**:
+     > *"La información presentada corresponde a una lectura genérica automatizada de la imagen y no constituye un diagnóstico médico ni sustituye un informe radiológico oficial. Si requiere el informe y la firma del médico responsable, deberá solicitarlo directamente al servicio médico correspondiente."*
+4. **Trazabilidad Completa**: `RX AUDIT` registra cada paso del ciclo de vida de forma inmutable.
 
-# 2. Compilar el binario para el modo Edge
-go build -ldflags="-s -w" -o bin/rx-dispatch-edge.exe ./cmd/gateway
+---
 
-# 3. Ejecutar el sistema en modo Edge
-.\bin\rx-dispatch-edge.exe --config .\config.json
+## Inicio Rápido
 
-.\scripts\validate_project.ps1
-go build -ldflags="-s -w" -o bin/rx-dispatch-edge.exe ./cmd/gateway
-.\bin\rx-dispatch-edge.exe --config .\config.json
+```bash
+# 1. Compilar los 9 binarios
+./scripts/build_all.sh
+
+# 2. Ejecutar las pruebas
+go test -v ./tests/...
+
+# 3. Iniciar todos los servicios
+./scripts/start_all.sh
+
+# 4. Probar topología y despacho
+./scripts/smoke_test.sh
+```

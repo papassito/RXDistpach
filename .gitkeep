@@ -1,0 +1,2 @@
+# This file ensures the 'static' directory is not empty, preventing 'go vet' errors
+# with `//go:embed static/*`. Build scripts will populate this directory with actual assets.

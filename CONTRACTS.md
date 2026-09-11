@@ -1,16 +1,22 @@
-# CONTRATOS DE API REST E IDEMPOTENCIA
+# ESPECIFICACIÓN DE CONTRATOS DE API
 **DOCUMENT STATUS:** `AUTHORITATIVE`  
 **AUDIT BASELINE:** `FROZEN NORMATIVE`  
-**REGULATORY FRAMEWORK ALIGNMENT:** Previsión técnica contra duplicidad de registros clínicos y transacciones redundantes.
+**ALINEACIÓN:** Contratos de comunicación entre servicios.
 
-## 1. ORQUESTACIÓN DE DESPACHO ASÍNCRONO
-**Endpoint:** `POST /api/v1/dispatch-flow`  
-**Mandato de Cabecera:** `Idempotency-Key: <UUID>`
+Todos los servicios se comunican mediante HTTP REST con esquemas JSON explícitos definidos en `internal/contracts/`.
 
-**Payload Canónico Estructural:**
+---
+
+## 1. Contratos de `rx-reader` (:8085)
+
+### `POST /reader/analyze`
+Ejecuta la lectura genérica automatizada no diagnóstica.
+*   **Estado:** `IMPLEMENTED / STATICALLY VERIFIED`
+
+**Request (`contracts.RequestGenericReadingRequest`):**
 ```json
 {
-  "studyId": "STU-8829-X",
-  "deliveryTarget": "+521234567890",
-  "channel": "WEBHOOK"
+  "studyId": "string",
+  "studyType": "string",
+  "anatomicalRegion": "string"
 }

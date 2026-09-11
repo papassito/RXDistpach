@@ -1,32 +1,45 @@
-### 5. `MAP.md`
+# RX DISPATCH — Repository Map
 
-```markdown
-# MAPA TOPOLÓGICO DE REPOSITORIO (SOURCE TREE VERIFICATION)
-**DOCUMENT STATUS:** `AUTHORITATIVE`  
-**AUDIT BASELINE:** `FROZEN NORMATIVE`
+**DOCUMENT STATUS:** `CONSOLIDATED BASELINE`
+**PURPOSE:** A map of the declared repository structure.
 
-El presente árbol declara la estructura certificable del código fuente. Toda desviación, supresión o anexo de directorios fantasma detectados durante el escrutinio del repositorio constituirá un hallazgo de No Conformidad en la Fase de Auditoría 1A.
+---
+
+## 1. DECLARED DIRECTORY STRUCTURE
+
+This map reflects the repository structure as declared in the project's documentation. The physical existence and content of each item are subject to phased audits.
 
 ```text
-rx-dispatch/
-├── assets/                  # Recursos estáticos UI e íconos base
-├── bin/                     # Artifact output (excluido del ámbito de auditoría de fuente)
-├── cmd/                     # PUNTOS DE ENTRADA (Main entrypoints)
-│   ├── audit/main.go
-│   ├── delivery/main.go
-│   ├── gateway/main.go
-│   ├── image/main.go
-│   ├── reader/main.go
-│   ├── result/main.go
-│   ├── security/main.go
-│   ├── storage/main.go
-│   └── study/main.go
-├── internal/                # CORE DEL DOMINIO (Lógica de negocio aislada)
-│   ├── dicom/               # TCP SCP Handler & Association Managers
-│   ├── models/              # Contratos de estructuras (Study, Job, AuditEvent)
-│   └── webassets/           # Dependencias estáticas embebidas
-├── scripts/                 # Infraestructura como código y automatización
-├── winres/                  # Ensamblado de binarios PE (Windows)
-├── config.json              # Mapeo maestro de parámetros de ejecución
-├── go.mod                   # Manifiesto estricto de dependencias
-└── README.md                # Documento normativo raíz
+RXDistpach/
+├── rx-dispatch/             # Go project root
+│   ├── cmd/                 # Entrypoints for the 9 domain services
+│   │   ├── audit/
+│   │   ├── delivery/
+│   │   ├── gateway/
+│   │   ├── image/
+│   │   ├── reader/          # -> Evidence: IMPLEMENTED
+│   │   ├── result/
+│   │   ├── security/
+│   │   ├── storage/
+│   │   └── study/
+│   ├── internal/            # Shared internal packages
+│   │   ├── config/
+│   │   ├── contracts/
+│   │   ├── models/
+│   │   ├── shared/
+│   │   ├── transport/
+│   │   └── webassets/
+│   ├── docs/                # Authoritative documentation (this folder)
+│   ├── scripts/             # Build, execution, and validation scripts
+│   ├── go.mod               # Go module dependencies
+│   └── go.sum
+├── assets/                  # Source for static UI assets (e.g., logos)
+├── bin/                     # Output for compiled binaries
+├── config.json              # Service topology configuration
+└── README.md                # Project root README
+```
+
+## 2. NOTES ON STRUCTURE
+
+*   **`docs/` vs. Root:** This `docs/` directory is being established as the single source of truth for core documentation. Other duplicated documents in the repository are pending consolidation in a later phase.
+*   **`tests/` Directory:** Documentation and scripts reference a `tests/` directory which is currently `MISSING` from the audited scope.

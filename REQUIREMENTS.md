@@ -1,25 +1,46 @@
-# ESPECIFICACIÓN DE INFRAESTRUCTURA Y ENTORNOS
-**DOCUMENT STATUS:** `AUTHORITATIVE`  
-**AUDIT BASELINE:** `FROZEN NORMATIVE`  
-**REGULATORY FRAMEWORK ALIGNMENT:** NOM-024-SSA3-2012 (MEX), Título 21 CFR Parte 11 (Controles Técnicos), LFPDPPP (MEX).
+# RX DISPATCH — System Requirements
 
-## 1. PERÍMETRO DE RED Y CONTROL DE ACCESO (ACL ENFORCEMENT)
-Para facilitar la observancia técnica de los marcos de seguridad sanitaria, se imponen las siguientes fronteras topológicas:
+**DOCUMENT STATUS:** `CONSOLIDATED BASELINE`
+**PURPOSE:** Catalog of normative and functional system requirements.
 
-**Controles de Red Entrantes (Inbound):**
-*   `11112 / TCP`: Listener DICOM C-STORE SCP. **Requiere segmentación de red estricta** (VLAN clínica, mitigación por Firewall a nivel IP). *Nota jurídica:* La evaluación del identificador `Calling AE Title` es exclusivamente un mecanismo de capa de aplicación DICOM y no constituye, por sí mismo, una identidad criptográfica o un control de acceso perimetral.
-*   `8089 / 8090 / TCP`: Listener de API Gateway según modo de despliegue. Exposición sujeta a la política de control de acceso de la jurisdicción del usuario final.
+---
 
-**Aislamiento de Lazo Local (Loopback Enforcement):**
-*   `8081` a `8088`: Vinculación exclusiva e irrenunciable a `127.0.0.1` (loopback).
+## 1. `rx-reader` Requirements
 
-**Controles de Red Salientes (Outbound):**
-*   `443 / TCP`: Salida autorizada para transmisiones externas utilizando obligatoriamente TLS 1.2 o superior.
+*   **REQ-RDR-001 (Non-Diagnostic Output):** The system must provide a component (`rx-reader`) to generate a generic, automated reading that is explicitly not a medical diagnosis.
+    *   **Evidence:** `IMPLEMENTED / STATICALLY VERIFIED`
 
-## 2. GESTIÓN DE ALMACENAMIENTO LOCAL
-Se requiere la asignación de un volumen persistente dedicado (`./storage_data`).
-`RequiredStorage = OriginalStudyStorage + DerivedStorage + LocalQueueDB + AuditDB + SafetyMargin`
+*   **REQ-RDR-002 (Mandatory Disclaimer):** Every reading from `rx-reader` must programmatically inject the constants `ReadingTypeGenericAutomated`, `StatusWithoutMedicalSignature`, `MedicalReportNotIncluded`, and the full `MandatoryLegalDisclaimer` text.
+    *   **Evidence:** `IMPLEMENTED / STATICALLY VERIFIED`
 
-## 3. RESPONSABILIDAD TRASLADADA SOBRE INMUTABILIDAD FÍSICA (WORM)
-RX DISPATCH **NO** provee inmutabilidad física ni criptográfica a nivel de bloque de almacenamiento en la capa de aplicación. Para cumplimentar la retención obligatoria de expedientes clínicos (e.g., NOM-004-SSA3-2012):
-*   La inmutabilidad de infraestructura WORM (*Write Once, Read Many*), la gestión de instantáneas (*snapshots*) y las políticas de retención física de la ruta `ORIG-*` residen enteramente bajo la jurisdicción administrativa e infraestructura del Responsable del Tratamiento de Datos (Centro de Salud / Hospital).
+## 2. Audit & Traceability Requirements
+
+*   **REQ-AUD-001 (Centralized Audit Service):** The system must have a central service (`rx-audit`) to log critical events.
+    *   **Evidence:** `DEFINED`
+
+*   **REQ-AUD-002 (Component Event Reporting):** Key components like `rx-reader` must send an audit event (`RecordAuditEventRequest`) to `rx-audit` after their main operation.
+    *   **Evidence:** `IMPLEMENTED / STATICALLY VERIFIED`
+
+## 3. Security & Access Requirements
+
+*   **REQ-SEC-001 (Internal Service Isolation):** Communication between internal microservices must be restricted to the local loopback interface (`127.0.0.1`).
+    *   **Evidence:** `DEFINED`
+
+*   **REQ-SEC-002 (PxLab Read-Only Access):** Any system interaction with the PxLab database must be strictly `READ-ONLY`.
+    *   **Evidence:** `DEFINED`
+
+## 4. Dispatch & Delivery Requirements
+
+*   **REQ-DEL-001 (Store-and-Forward Mechanism):** The delivery service (`rx-delivery`) must implement a resilient queue to handle and retry failed deliveries to external systems.
+    *   **Evidence:** `DEFINED`
+
+## 5. Infrastructure Requirements
+
+*   **REQ-INF-001 (Network Perimeter):** Access controls must be applied to exposed ports, including `11112/TCP` (DICOM) and `8080/TCP` (Gateway).
+    *   **Evidence:** `DEFINED`
+
+*   **REQ-INF-002 (Persistent Storage):** A persistent storage volume is required for study data, queues, and audit logs.
+    *   **Evidence:** `DEFINED`
+
+*   **REQ-INF-003 (WORM Responsibility):** The system provides logical immutability (SHA-256). Physical WORM infrastructure is the responsibility of the system administrator.
+    *   **Evidence:** `DEFINED`

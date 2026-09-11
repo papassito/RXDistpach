@@ -1,6 +1,0 @@
-{
-  "name": "RX DISPATCH - Sistema de Rayos X",
-  "description": "Sistema de envío de resultados e imágenes de Rayos X con arquitectura 100% Go, modular, desacoplada y cero monolito. Nueve microservicios Go independientes comunicados mediante contratos.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

@@ -1,0 +1,158 @@
+<#
+================================================================================
+  RX DISPATCH - DEEP GO VET FORENSIC ANALYZER (v1.0)
+  Target: Escrutinio Profundo de Sintaxis, Analizadores y Paquetes Go
+================================================================================
+#>
+
+[CmdletBinding()]
+param (
+    [string]$RootPath = "."
+)
+
+$ErrorActionPreference = "Continue"
+
+Clear-Host
+Write-Host "==========================================================================" -ForegroundColor Cyan
+Write-Host " 🔬 RX DISPATCH :: INSPECTOR PROFUNDO DE GO VET (ANALIZADOR DE SINTAXIS)" -ForegroundColor Cyan
+Write-Host "    'Escrutinio granular por paquete, analizador y línea de código'" -ForegroundColor DarkCyan
+Write-Host "==========================================================================" -ForegroundColor Cyan
+Write-Host ""
+
+# ------------------------------------------------------------------------------
+# 1. VERIFICACIÓN DE TOOLCHAIN
+# ------------------------------------------------------------------------------
+if (-not (Get-Command "go" -ErrorAction SilentlyContinue)) {
+    Write-Host "[🔴 ERROR CRÍTICO] La herramienta 'go' no está disponible en el PATH." -ForegroundColor Red
+    Write-Host "[ PRESIONE CUALQUIER TECLA PARA CONTINUAR ]" -ForegroundColor Yellow
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    return
+}
+
+if (-not (Test-Path (Join-Path $RootPath "go.mod"))) {
+    Write-Host "[🔴 ERROR CRÍTICO] Falta 'go.mod' en la raíz ($RootPath). Imposible auditar dependencias." -ForegroundColor Red
+    Write-Host "[ PRESIONE CUALQUIER TECLA PARA CONTINUAR ]" -ForegroundColor Yellow
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    return
+}
+
+Push-Location $RootPath
+
+# ------------------------------------------------------------------------------
+# 2. DESCUBRIMIENTO DE PAQUETES DE DOMINIO
+# ------------------------------------------------------------------------------
+Write-Host "--- [ 📦 ESCANEO Y DESCUBRIMIENTO DE PAQUETES GO ] ---" -ForegroundColor Yellow
+
+$Packages = go list ./... 2>&1 | Where-Object { $_ -notmatch "error" -and $_ -match "rx-dispatch" }
+
+if (-not $Packages) {
+    Write-Host "[⚠️ ADVERTENCIA] No se identificaron paquetes válidos con 'go list ./...'. Revisa go.mod." -ForegroundColor Yellow
+    $Packages = @("./cmd/...", "./internal/...")
+} else {
+    Write-Host "Se encontraron $($Packages.Count) paquetes para escrutinio:" -ForegroundColor Green
+    foreach ($Pkg in $Packages) {
+        Write-Host "  • $Pkg" -ForegroundColor Gray
+    }
+}
+
+# ------------------------------------------------------------------------------
+# 3. EJECUCIÓN GRANULAR DE GO VET (PAQUETE POR PAQUETE)
+# ------------------------------------------------------------------------------
+Write-Host "`n--- [ 🔍 AUDITORÍA DE ANALIZADORES ESTÁTICOS (GO VET) ] ---" -ForegroundColor Yellow
+
+$TotalVetErrors = 0
+$FindingsList = @()
+
+# Expresión regular para parsear la salida de go vet (Archivo:Línea:Columna: Mensaje)
+$VetRegex = "^(?<File>.*\.go):(?<Line>\d+):(?<Col>\d+)?:?\s*(?<Msg>.*)$"
+
+foreach ($Pkg in $Packages) {
+    Write-Host "`n[ANALIZANDO]: $Pkg" -ForegroundColor Cyan
+    $RawOutput = go vet $Pkg 2>&1
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  🟢 [PASÓ] Sin observaciones de sintaxis o lógica en este paquete." -ForegroundColor Green
+    } else {
+        Write-Host "  🔴 [FALLÓ] Se encontraron violaciones en este paquete:" -ForegroundColor Red
+
+        foreach ($Line in $RawOutput) {
+            $LineStr = $Line.ToString()
+            
+            if ($LineStr -match $VetRegex) {
+                $File = $Matches['File']
+                $LineNum = $Matches['Line']
+                $ColNum = $Matches['Col']
+                $Msg = $Matches['Msg']
+
+                # Obtener la línea de código afectada si el archivo existe
+                $CodeSnippet = ""
+                if (Test-Path $File) {
+                    $Lines = Get-Content $File -ErrorAction SilentlyContinue
+                    if ($LineNum -le $Lines.Count) {
+                        $CodeSnippet = $Lines[[int]$LineNum - 1].Trim()
+                    }
+                }
+
+                # Clasificar el tipo de análisis que falló
+                $Category = switch -Regex ($Msg) {
+                    "struct tag"         { "Etiqueta JSON/Struct Inválida" }
+                    "printf"             { "Formato de Printf Inconsistente" }
+                    "copylocks"          { "Copia Ilegal de Mutex/Lock" }
+                    "unreachable"        { "Código Inalcanzable" }
+                    "composite literal"  { "Inicialización de Struct Sin Llaves" }
+                    "shadow"             { "Sombra de Variable (Shadowing)" }
+                    "atomic"             { "Uso Incorrecto de sync/atomic" }
+                    "expected 'package'" { "Falta Declaración de Package / Archivo Vacío" }
+                    "is not in std"      { "Importación de Módulo Rota" }
+                    Default              { "Violación General de Sintaxis/Lógica" }
+                }
+
+                Write-Host "    --------------------------------------------------" -ForegroundColor DarkGray
+                Write-Host "    📄 Archivo   : $File" -ForegroundColor White
+                Write-Host "    📍 Ubicación : Línea $LineNum, Columna $ColNum" -ForegroundColor Yellow
+                Write-Host "    🏷️ Categoría : $Category" -ForegroundColor Magenta
+                Write-Host "    💬 Mensaje   : $Msg" -ForegroundColor Red
+                if ($CodeSnippet) {
+                    Write-Host "    💻 Código    : $CodeSnippet" -ForegroundColor DarkCyan
+                }
+
+                $TotalVetErrors++
+                $FindingsList += [pscustomobject]@{
+                    Package  = $Pkg
+                    File     = $File
+                    Line     = $LineNum
+                    Category = $Category
+                    Message  = $Msg
+                }
+            } else {
+                # Líneas de error generales (ej. errores de compilador globales)
+                Write-Host "    👉 $LineStr" -ForegroundColor Red
+                $TotalVetErrors++
+            }
+        }
+    }
+}
+
+Pop-Location
+
+# ------------------------------------------------------------------------------
+# 4. RESUMEN Y MATRIZ DE REMEDIACIÓN
+# ------------------------------------------------------------------------------
+Write-Host "`n==========================================================================" -ForegroundColor Cyan
+Write-Host "                  RESUMEN DE INSPECCIÓN PROFUNDA DE GO VET" -ForegroundColor Cyan
+Write-Host "==========================================================================" -ForegroundColor Cyan
+Write-Host " Total de Paquetes Inspeccionados : $($Packages.Count)" -ForegroundColor White
+Write-Host " Total de Errores/Hallazgos        : $TotalVetErrors" -ForegroundColor $(if ($TotalVetErrors -eq 0) { "Green" } else { "Red" })
+Write-Host " Dictamen de Sintaxis             : $(if ($TotalVetErrors -eq 0) { '🟢 LIMPIO / COMPILATION PASSED' } else { '🔴 RECHAZADO / CORRECCIÓN REQUERIDA' })" -ForegroundColor $(if ($TotalVetErrors -eq 0) { "Green" } else { "Red" })
+Write-Host "==========================================================================" -ForegroundColor Cyan
+
+if ($FindingsList.Count -gt 0) {
+    Write-Host "`n[ RECOMENDACIONES DE REMEDIACIÓN RÁPIDA ]" -ForegroundColor Yellow
+    $Grouped = $FindingsList | Group-Object Category
+    foreach ($Group in $Grouped) {
+        Write-Host "  • $($Group.Name) ($($Group.Count) ocurrencia(s))" -ForegroundColor Red
+    }
+}
+
+Write-Host "`n[ PRESIONE CUALQUIER TECLA PARA CONTINUAR EN LA CONSOLA ]" -ForegroundColor Yellow
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
