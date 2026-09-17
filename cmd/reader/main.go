@@ -32,6 +32,10 @@ func main() {
 		port = defaultPort
 	}
 	host := os.Getenv("HOST")
+	// Per REQ-SEC-001, internal services must default to loopback.
+	if host == "" {
+		host = "127.0.0.1"
+	}
 	log.Printf("[%s] Starting service on port %s", serviceName, port)
 
 	// InicializaciÃ³n del servidor con sus clientes de transporte

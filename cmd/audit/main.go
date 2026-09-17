@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"rx-dispatch/internal/contracts"
+	"rx-dispatch/internal/models"
 )
 
 const (
@@ -31,12 +32,53 @@ func main() {
 	log.Printf("[%s] Starting service scaffold on port %s", serviceName, port)
 
 	http.HandleFunc("/healthz", healthCheckHandler)
+	http.HandleFunc("/audit/event", eventHandler)
 
 	addr := fmt.Sprintf("%s:%s", host, port)
 	log.Printf("[%s] Listening on %s", serviceName, addr)
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatalf("[%s] Failed to start server: %v", serviceName, err)
 	}
+}
+
+func eventHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+
+	r.Body = http.MaxBytesReader(w, r.Body, 1<<20) // 1MB limit
+
+	var req contracts.RecordAuditEventRequest
+	dec := json.NewDecoder(r.Body)
+	dec.DisallowUnknownFields()
+
+	if err := dec.Decode(&req); err != nil {
+		if err.Error() == "http: request body too large" {
+			http.Error(w, "Request body must not be larger than 1MB", http.StatusRequestEntityTooLarge)
+			return
+		}
+		http.Error(w, "Invalid or malformed JSON payload", http.StatusBadRequest)
+		return
+	}
+
+	// Validación básica para asegurar que el evento no está vacío.
+	if req.Event == (models.AuditEvent{}) || req.Event.EventAction == "" {
+		http.Error(w, "Invalid audit event payload: event data is missing or incomplete", http.StatusBadRequest)
+		return
+	}
+
+	// Registrar el evento recibido. En una implementación futura, esto se escribiría en un log persistente.
+	log.Printf("[%s] AUDIT EVENT RECEIVED: Action=%s, User=%s, Outcome=%s, SourceIP=%s, StudyUID=%s",
+		serviceName,
+		req.Event.EventAction,
+		req.Event.UserID,
+		req.Event.EventOutcome,
+		req.Event.SourceIP,
+		req.Event.StudyInstanceUID,
+	)
+
+	w.WriteHeader(http.StatusAccepted)
 }
 
 func healthCheckHandler(w http.ResponseWriter, r *http.Request) {

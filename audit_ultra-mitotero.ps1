@@ -436,14 +436,14 @@ $dicomIdentifier = @()
 
 foreach ($file in $GoFiles) {
     $dicomLiteral    += Select-String -Path $file.FullName -Pattern 'A-ASSOCIATE-RJ' -ErrorAction SilentlyContinue
-    $dicomIdentifier += Select-String -Path $file.FullName -Pattern '\bDicomAssociateReject\b' -ErrorAction SilentlyContinue
+    $dicomIdentifier += Select-String -Path $file.FullName -Pattern '\bDicomAssociateRJ\b' -ErrorAction SilentlyContinue
 }
 
 if ($dicomLiteral.Count -eq 0) {
     Add-Finding -Code "RXD-WARN-006" -Category "DICOM_REJECT_NOT_DETECTED" -Description "No se encontró A-ASSOCIATE-RJ." -Severity "MEDIUM" -EvidenceScope "Go source"
     Show-Warn "[DICOM] No se detectó referencia explícita a A-ASSOCIATE-RJ."
 } elseif ($dicomIdentifier.Count -le 1) {
-    Add-Finding -Code "RXD-WARN-006A" -Category "DICOM_REJECT_DECLARED_ONLY" -Description "Constante A-ASSOCIATE-RJ declarada pero sin consumo funcional comprobado." -Severity "MEDIUM" -EvidenceScope "Go source" -Evidence (($dicomLiteral | ForEach-Object { "$($_.Path):$($_.LineNumber)" }) -join "`n")
+    Add-Finding -Code "RXD-WARN-006A" -Category "DICOM_REJECT_DECLARED_ONLY" -Description "Constante DicomAssociateRJ declarada pero sin consumo funcional comprobado." -Severity "MEDIUM" -EvidenceScope "Go source" -Evidence (($dicomIdentifier | ForEach-Object { "$($_.Path):$($_.LineNumber)" }) -join "`n")
     Show-Warn "[DICOM] Referencia declarada, uso funcional no acreditado."
 } else {
     Add-Pass "[DICOM] Se detectó declaración y referencia adicional de DicomAssociateReject."
@@ -461,7 +461,7 @@ if ($ModelFiles.Count -eq 0) {
     Show-Fail "[EPHI] No se encontró alcance de modelos evaluable."
 } else {
     foreach ($field in $EPHIFields) {
-        $pattern = 'json:"' + [regex]::Escape($field) + '"'
+        $pattern = 'json:"' + [regex]::Escape($field) + '(?:,[^"]*)?"'
         $matches = @()
         foreach ($file in $ModelFiles) {
             $matches += Select-String -Path $file.FullName -Pattern $pattern -ErrorAction SilentlyContinue
