@@ -1,6 +1,6 @@
 ﻿{
-    "Timestamp":  "2026-09-16T21:07:44.8804240-07:00",
-    "Status":  "PASS_WITH_WARNINGS",
+    "Timestamp":  "2026-09-16T21:39:37.0850133-07:00",
+    "Status":  "FAIL",
     "Scope":  {
                   "RepositoryRoot":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach",
                   "RequireBaselineAtRoot":  true,
@@ -9,100 +9,46 @@
     "Metrics":  {
                     "TotalFilesScanned":  69,
                     "GoFilesScanned":  23,
-                    "TotalLinesOfCode":  1323,
-                    "PassedChecks":  42,
+                    "TotalLinesOfCode":  1508,
+                    "PassedChecks":  48,
                     "Informational":  0,
-                    "Warnings":  9,
-                    "HighErrors":  0,
+                    "Warnings":  2,
+                    "HighErrors":  1,
                     "CriticalErrors":  0,
-                    "BlockingFindings":  0
+                    "BlockingFindings":  1
                 },
     "ExecutionGate":  {
                           "GoBuild":  true,
-                          "GoTest":  true,
+                          "GoTest":  false,
                           "GoVet":  true
                       },
     "Findings":  [
+                     {
+                         "Code":  "MITOTE-GIT-001",
+                         "Category":  "GIT_DIRTY",
+                         "Description":  "El working tree contiene cambios sin commit y/o archivos no rastreados.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "git working tree",
+                         "Evidence":  "M audit_ultra-mitotero.ps1\r\n M cmd/audit/main.go\r\n M cmd/audit/main_test.go\r\n M cmd/delivery/main.go\r\n M cmd/gateway/main.go\r\n M cmd/image/main.go\r\n M cmd/reader/main.go\r\n M cmd/result/main.go\r\n M cmd/security/main.go\r\n M cmd/storage/main.go\r\n M cmd/study/main.go\r\n M scripts/run_services.ps1\r\n M scripts/stop_services.ps1",
+                         "Timestamp":  "2026-09-16T21:39:26.9333823-07:00"
+                     },
                      {
                          "Code":  "RXD-SEC-001",
                          "Category":  "MISSING_BODY_LIMIT",
                          "Description":  "Servicio HTTP carece de http.MaxBytesReader (riesgo DoS por memoria).",
                          "Severity":  "MEDIUM",
                          "EvidenceScope":  "cmd/*/main.go",
-                         "Evidence":  ".\\cmd\\audit\\main.go; .\\cmd\\gateway\\main.go; .\\cmd\\image\\main.go; .\\cmd\\security\\main.go; .\\cmd\\storage\\main.go; .\\cmd\\study\\main.go",
-                         "Timestamp":  "2026-09-16T21:07:35.9100411-07:00"
+                         "Evidence":  ".\\cmd\\gateway\\main.go; .\\cmd\\image\\main.go; .\\cmd\\security\\main.go; .\\cmd\\storage\\main.go; .\\cmd\\study\\main.go",
+                         "Timestamp":  "2026-09-16T21:39:27.1298986-07:00"
                      },
                      {
-                         "Code":  "RXD-WARN-006A",
-                         "Category":  "DICOM_REJECT_DECLARED_ONLY",
-                         "Description":  "Constante A-ASSOCIATE-RJ declarada pero sin consumo funcional comprobado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Go source",
-                         "Evidence":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\shared\\constants.go:20",
-                         "Timestamp":  "2026-09-16T21:07:35.9920311-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "Campo \u0027event_error_code\u0027 no detectado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T21:07:36.0060253-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "Campo \u0027source_ae_title\u0027 no detectado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T21:07:36.0190564-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "Campo \u0027destination_ae_title\u0027 no detectado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T21:07:36.0260417-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "Campo \u0027patient_id\u0027 no detectado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T21:07:36.0300376-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "Campo \u0027study_instance_uid\u0027 no detectado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T21:07:36.0340311-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "Campo \u0027accession_number\u0027 no detectado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T21:07:36.0380355-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "Campo \u0027number_of_instances\u0027 no detectado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T21:07:36.0410316-07:00"
+                         "Code":  "RXD-ERR-007",
+                         "Category":  "GO_TEST_FAIL",
+                         "Description":  "go test ./... -count=1 no completó correctamente. Revisar la salida real de la herramienta.",
+                         "Severity":  "HIGH",
+                         "EvidenceScope":  "go workspace",
+                         "Evidence":  "2026/09/16 21:39:36 [rx-audit] AUDIT EVENT RECEIVED: Action=TEST_ACTION, User=test-user, Outcome=SUCCESS, SourceIP=, StudyUID=\r\n--- FAIL: TestEventHandler (0.03s)\r\n    --- FAIL: TestEventHandler/should_return_413_for_body_too_large (0.00s)\r\n        main_test.go:137: handler returned wrong status code: got 400 want 413\r\nFAIL\r\nFAIL\trx-dispatch/cmd/audit\t3.164s\r\nok  \trx-dispatch/cmd/delivery\t2.256s\r\nok  \trx-dispatch/cmd/gateway\t2.148s\r\nok  \trx-dispatch/cmd/image\t2.129s\r\nok  \trx-dispatch/cmd/reader\t2.831s\r\nok  \trx-dispatch/cmd/result\t2.306s\r\nok  \trx-dispatch/cmd/security\t2.151s\r\nok  \trx-dispatch/cmd/storage\t2.718s\r\nok  \trx-dispatch/cmd/study\t2.305s\r\n?   \trx-dispatch/internal/contracts\t[no test files]\r\n?   \trx-dispatch/internal/models\t[no test files]\r\n?   \trx-dispatch/internal/shared\t[no test files]\r\n?   \trx-dispatch/internal/transport\t[no test files]\r\nFAIL",
+                         "Timestamp":  "2026-09-16T21:39:36.4116981-07:00"
                      }
                  ]
 }
