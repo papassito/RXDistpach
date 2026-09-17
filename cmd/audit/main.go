@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -49,12 +51,10 @@ func eventHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r.Body = http.MaxBytesReader(w, r.Body, 1<<20) // 1MB limit
+	defer r.Body.Close()
 
-	var req contracts.RecordAuditEventRequest
-	dec := json.NewDecoder(r.Body)
-	dec.DisallowUnknownFields()
-
-	if err := dec.Decode(&req); err != nil {
+	payload, err := io.ReadAll(r.Body)
+	if err != nil {
 		var maxBytesErr *http.MaxBytesError
 		if errors.As(err, &maxBytesErr) {
 			http.Error(
@@ -64,6 +64,16 @@ func eventHandler(w http.ResponseWriter, r *http.Request) {
 			)
 			return
 		}
+		// Otro error de lectura, menos común pero posible (ej. error de red).
+		http.Error(w, "Failed to read request body", http.StatusBadRequest)
+		return
+	}
+
+	var req contracts.RecordAuditEventRequest
+	dec := json.NewDecoder(bytes.NewReader(payload))
+	dec.DisallowUnknownFields()
+
+	if err := dec.Decode(&req); err != nil {
 		http.Error(w, "Invalid or malformed JSON payload", http.StatusBadRequest)
 		return
 	}
