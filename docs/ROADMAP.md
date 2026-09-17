@@ -18,7 +18,7 @@ Este roadmap sigue los principios del `MANIFEST.md`. Cada fase debe completarse 
 
 *   **Objetivo:** Definir y codificar las estructuras de datos (DTOs) y las firmas de API para la comunicación entre servicios.
 *   **Entregable:** Paquetes `internal/contracts` y `internal/models` implementados y estáticamente verificables.
-*   **Estado Actual:** `COMPLETED`.
+*   **Estado Actual:** `PENDING`.
 
 ---
 
@@ -26,7 +26,7 @@ Este roadmap sigue los principios del `MANIFEST.md`. Cada fase debe completarse 
 
 *   **Objetivo:** Crear la estructura de directorios y los puntos de entrada (`main.go`) para cada uno de los 9 servicios, sin lógica de negocio completa, pero con la configuración y los endpoints HTTP básicos.
 *   **Entregable:** Esqueleto funcional de los 9 microservicios que pueden compilar e iniciarse.
-*   **Estado Actual:** `COMPLETED`.
+*   **Estado Actual:** `PENDING`.
 
 ---
 
@@ -34,7 +34,7 @@ Este roadmap sigue los principios del `MANIFEST.md`. Cada fase debe completarse 
 
 *   **Objetivo:** Implementar la lógica de negocio de cada servicio, siguiendo los contratos definidos. Cada pieza de funcionalidad debe ir acompañada de pruebas unitarias.
 *   **Entregable:** Código fuente de los servicios con una cobertura de pruebas unitarias aceptable.
-*   **Estado Actual:** `IN PROGRESS`.
+*   **Estado Actual:** `PENDING`.
 
 ---
 
@@ -42,7 +42,7 @@ Este roadmap sigue los principios del `MANIFEST.md`. Cada fase debe completarse 
 
 *   **Objetivo:** Verificar que los servicios se comunican correctamente entre sí y que el flujo de datos completo (DICOM -> Delivery) funciona como se espera en un entorno controlado.
 *   **Entregable:** Scripts de prueba de integración y evidencia de un flujo E2E exitoso.
-*   **Estado Actual:** `IN PROGRESS`.
+*   **Estado Actual:** `PENDING`.
 
 ---
 

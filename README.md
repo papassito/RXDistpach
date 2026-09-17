@@ -10,17 +10,13 @@ RX DISPATCH es un sistema modular de microservicios independientes escrito ínte
 
 ```text
 RXDistpach/
-├── rx-dispatch/             # Go project root
-│   ├── cmd/                 # Entrypoints for the 9 domain services
-│   ├── internal/            # Shared internal packages
-│   ├── docs/                # Authoritative documentation
-│   ├── scripts/             # Build, execution, and validation scripts
-│   ├── go.mod
-│   └── go.sum
-├── assets/                  # Source for static UI assets
-├── bin/                     # Output for compiled binaries
-├── config.json              # Service topology configuration
-└── README.md                # Project root README
+|-- cmd/reader/       # Servicio inicial y sus pruebas
+|-- internal/         # contracts, models, shared y transport
+|-- docs/             # Documentación centralizada
+|-- scripts/          # Herramientas del repositorio
+|-- go.mod            # Único módulo Go
+|-- .gitignore
+`-- README.md
 ```
 
 ---
@@ -41,16 +37,24 @@ RXDistpach/
 
 ## Inicio Rápido
 
-```bash
-# 1. Compilar los 9 binarios
-./scripts/build_all.sh
+Requisito: Go 1.26.5 o posterior. Ejecutar desde la raíz del repositorio:
 
-# 2. Ejecutar las pruebas
-go test -v ./tests/...
-
-# 3. Iniciar todos los servicios
-./scripts/start_all.sh
-
-# 4. Probar topología y despacho
-./scripts/smoke_test.sh
+```powershell
+go test ./...
+go vet ./...
+go build ./...
+go run ./cmd/reader
 ```
+
+Solo `reader` tiene una implementación inicial; los otros ocho servicios están planificados.
+Los scripts de arranque global, `config.json`, los recursos de interfaz y las pruebas de
+integración se agregarán cuando se implementen. `go.sum` aparecerá si se requieren dependencias externas.
+
+## Organización
+
+La raíz del repositorio es también la raíz del módulo Go. No crear otra carpeta
+`rx-dispatch` dentro de ella. Consultar [el mapa](docs/MAP.md) antes de agregar archivos.
+Cada documento tiene una única ubicación en `docs/`; cada servicio usa `cmd/<servicio>/`.
+Crear carpetas cuando tengan contenido, sin marcadores `.gitkeep` ni copias de respaldo dentro del repositorio.
+
+Verificar la estructura con `powershell -File scripts/check_structure.ps1`.

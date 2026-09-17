@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Generated outputs and local runtime state
+/bin/
+/.pids/
+*.test
+/coverage.out
