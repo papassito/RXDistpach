@@ -11,4 +11,5 @@ coverage/
 /bin/
 /.pids/
 *.test
+/reports/
 /coverage.out

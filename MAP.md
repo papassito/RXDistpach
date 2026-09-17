@@ -11,32 +11,30 @@ This map reflects the repository structure as declared in the project's document
 
 ```text
 RXDistpach/
-├── rx-dispatch/             # Go project root
-│   ├── cmd/                 # Entrypoints for the 9 domain services
-│   │   ├── audit/
-│   │   ├── delivery/
-│   │   ├── gateway/
-│   │   ├── image/
-│   │   ├── reader/
-│   │   ├── result/
-│   │   ├── security/
-│   │   ├── storage/
-│   │   └── study/
-│   ├── internal/            # Shared internal packages
-│   │   ├── config/
-│   │   ├── contracts/
-│   │   ├── models/
-│   │   ├── shared/
-│   │   ├── transport/
-│   │   └── webassets/
-│   ├── docs/                # Authoritative documentation (this folder)
-│   ├── scripts/             # Build, execution, and validation scripts
-│   ├── go.mod               # Go module dependencies
-│   └── go.sum
-├── assets/                  # Source for static UI assets (e.g., logos)
-├── bin/                     # Output for compiled binaries
-├── config.json              # Service topology configuration
-└── README.md                # Project root README
+├── .gitignore
+├── README.md
+├── go.mod
+├── go.sum
+├── cmd/
+│   ├── audit/
+│   ├── delivery/
+│   ├── gateway/
+│   ├── image/
+│   ├── reader/
+│   ├── result/
+│   ├── security/
+│   ├── storage/
+│   └── study/
+├── internal/
+│   ├── contracts/
+│   ├── models/
+│   ├── shared/
+│   └── transport/
+├── docs/
+├── scripts/
+├── bin/
+├── reports/
+└── .pids/
 ```
 
 ## 2. NOTES ON STRUCTURE

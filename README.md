@@ -1,12 +1,12 @@
 # RX DISPATCH BY KLIK SOFT PRO
 ## Sistema de Envío de Resultados e Imágenes de Rayos X
-### Arquitectura: 100% Go · Cero Monolítico · Modular · Desacoplado
+### Arquitectura: 100% Go · Microservicios · Desacoplado
 
 RX DISPATCH es un sistema modular de microservicios independientes escrito íntegramente en lenguaje **Go**, concebido para gestionar la ingesta de estudios radiológicos, asegurar la inmutabilidad de imágenes originales mediante SHA-256, emitir lecturas genéricas automatizadas no diagnósticas con advertencias clínicas obligatorias y realizar el despacho multicanal de resultados a destinatarios autorizados.
 
 ---
 
-## Estructura del Proyecto
+## Estructura de Alto Nivel
 
 ```text
 RXDistpach/
@@ -14,7 +14,7 @@ RXDistpach/
 |-- internal/         # contracts, models, shared y transport
 |-- docs/             # Documentación centralizada
 |-- scripts/          # Herramientas del repositorio
-|-- go.mod            # Único módulo Go
+|-- go.mod
 |-- .gitignore
 `-- README.md
 ```
