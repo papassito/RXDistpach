@@ -17,17 +17,17 @@ import (
 type mockAuditClient struct{}
 
 // SendEvent es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n no operativa que satisface la interfaz.
-func (m *mockAuditClient) SendEvent(event contracts.RecordAuditEventRequest) {
-	// En una prueba mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡s avanzada, podrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­amos verificar que este mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©todo fue llamado.
-	// Por ahora, simplemente evitamos la llamada de red.
+func (m *mockAuditClient) SendEvent(req contracts.RecordAuditEventRequest) error {
+	// En una prueba mÃ¡s avanzada, podrÃ­amos verificar que este mÃ©todo fue llamado.
+	return nil
 }
 
 // mockResultClient es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n falsa del ResultClient para evitar llamadas de red en las pruebas.
 type mockResultClient struct{}
 
 // ConsolidateReading es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n no operativa que satisface la interfaz.
-func (m *mockResultClient) ConsolidateReading(reading models.GenericReading) {
-	// no-op
+func (m *mockResultClient) ConsolidateReading(req interface{}) error {
+	return nil
 }
 
 func TestAnalyzeHandler(t *testing.T) {
@@ -52,7 +52,7 @@ func TestAnalyzeHandler(t *testing.T) {
 
 	// 2. ActuaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (Act)
 	// Llamar al manejador directamente.
-	srv.analyzeHandler(rr, req)
+	http.HandlerFunc(srv.analyzeHandler).ServeHTTP(rr, req)
 
 	// 3. AfirmaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (Assert)
 	// Verificar que el cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³digo de estado es 200 OK.

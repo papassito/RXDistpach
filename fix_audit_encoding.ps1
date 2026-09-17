@@ -1,3 +1,6 @@
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+
+$auditScriptCode = @'
 <#
 ================================================================================
  RX DISPATCH :: MOTOR DE AUDITORÍA PERICIAL Y ESCANEO PROFUNDO v4.1
@@ -186,3 +189,9 @@ Write-Host (" go build ./... : {0}" -f $(if ($buildOK) { "PASS" } else { "FAIL" 
 Write-Host (" go test ./...  : {0}" -f $(if ($testOK) { "PASS" } else { "FAIL" }))
 Write-Host (" go vet ./...   : {0}" -f $(if ($vetOK) { "PASS" } else { "FAIL" }))
 Write-Host "==========================================================================" -ForegroundColor Cyan
+'@
+
+[System.IO.File]::WriteAllText((Resolve-Path ".\audit_ultra-mitotero.ps1"), $auditScriptCode.Trim(), $utf8NoBom)
+Write-Host "✅ audit_ultra-mitotero.ps1 saneado en UTF-8 puro." -ForegroundColor Green
+
+.\audit_ultra-mitotero.ps1

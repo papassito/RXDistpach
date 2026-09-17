@@ -15,4 +15,7 @@ const (
 
 	// MandatoryLegalDisclaimer is the full legal text required by REQ-RDR-002.
 	MandatoryLegalDisclaimer = "La información presentada corresponde a una lectura genérica automatizada de la imagen y no constituye un diagnóstico médico ni sustituye un informe radiológico oficial. Si requiere el informe y la firma del médico responsable, deberá solicitarlo directamente al servicio médico correspondiente."
+
+	// DicomAssociateRJ is the normative protocol command for rejecting a DICOM association, as per SECURITY.md.
+	DicomAssociateRJ = "A-ASSOCIATE-RJ"
 )

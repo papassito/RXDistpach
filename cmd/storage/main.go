@@ -1,43 +1,53 @@
 package main
 
 import (
-    "encoding/json"
-    "fmt"
-    "log"
-    "net/http"
-    "time"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"time"
 
-    "rx-dispatch/internal/contracts"
+	"rx-dispatch/internal/contracts"
 )
 
 const (
-    serviceName = "rx-storage"
-    servicePort = 8083
-    version     = "0.1.0-scaffold"
+	serviceName = "rx-storage"
+	defaultPort = "8083"
+	version     = "0.1.0-scaffold"
 )
 
 func main() {
-    log.Printf("[%s] Starting service scaffold on port %d", serviceName, servicePort)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = defaultPort
+	}
+	host := os.Getenv("HOST")
 
-    http.HandleFunc("/healthz", healthCheckHandler)
+	log.Printf("[%s] Starting service scaffold on port %s", serviceName, port)
 
-    addr := fmt.Sprintf("127.0.0.1:%d", servicePort)
-    log.Printf("[%s] Listening on %s", serviceName, addr)
-    if err := http.ListenAndServe(addr, nil); err != nil {
-        log.Fatalf("[%s] Failed to start server: %v", serviceName, err)
-    }
+	http.HandleFunc("/healthz", healthCheckHandler)
+
+	addr := fmt.Sprintf("%s:%s", host, port)
+	log.Printf("[%s] Listening on %s", serviceName, addr)
+	if err := http.ListenAndServe(addr, nil); err != nil {
+		log.Fatalf("[%s] Failed to start server: %v", serviceName, err)
+	}
 }
 
 func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
-    response := contracts.HealthResponse{
-        Service:   serviceName,
-        Port:      servicePort,
-        Status:    "UP",
-        Timestamp: time.Now().UTC().Format(time.RFC3339),
-        Version:   version,
-    }
+	if r.Method != http.MethodGet {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+	response := contracts.HealthResponse{
+		Service:   serviceName,
+		Status:    "UP",
+		Timestamp: time.Now().UTC().Format(time.RFC3339),
+		Version:   version,
+	}
 
-    w.Header().Set("Content-Type", "application/json")
-    w.WriteHeader(http.StatusOK)
-    _ = json.NewEncoder(w).Encode(response)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(response)
 }

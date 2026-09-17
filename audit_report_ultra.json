@@ -1,21 +1,21 @@
 ﻿{
-    "Timestamp":  "2026-09-11T16:24:04.8820834-07:00",
+    "Timestamp":  "2026-09-16T20:41:24.8152566-07:00",
     "Status":  "FAIL",
     "Scope":  {
-                  "RepositoryRoot":  "Y:\\Documentos\\GitHub\\RXDistpach",
+                  "RepositoryRoot":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach",
                   "RequireBaselineAtRoot":  true,
                   "Statement":  "Los hallazgos se limitan al alcance inspeccionado. NOT_DETECTED no implica inexistencia global."
               },
     "Metrics":  {
-                    "TotalFilesScanned":  49,
-                    "GoFilesScanned":  23,
-                    "TotalLinesOfCode":  1319,
-                    "PassedChecks":  12,
+                    "TotalFilesScanned":  62,
+                    "GoFilesScanned":  18,
+                    "TotalLinesOfCode":  1069,
+                    "PassedChecks":  37,
                     "Informational":  0,
-                    "Warnings":  18,
+                    "Warnings":  11,
                     "HighErrors":  3,
-                    "CriticalErrors":  4,
-                    "BlockingFindings":  7
+                    "CriticalErrors":  0,
+                    "BlockingFindings":  3
                 },
     "ExecutionGate":  {
                           "GoBuild":  false,
@@ -26,227 +26,128 @@
                      {
                          "Code":  "MITOTE-GIT-001",
                          "Category":  "GIT_DIRTY",
-                         "Description":  "El working tree contiene cambios sin commit y/o archivos no rastreados. Esto se reporta como estado de trabajo, no como corrupción ni como \u0027basura\u0027.",
+                         "Description":  "El working tree contiene cambios sin commit y/o archivos no rastreados.",
                          "Severity":  "MEDIUM",
                          "EvidenceScope":  "git working tree",
-                         "Evidence":  "M .gitignore\r\n D .gitkeep\r\n D ARCHITECTURE.md\r\n D COMPONENTS.md\r\n D DICOM.md\r\n D ENVIOS.md\r\n D GITHUB.md\r\n D MANIFEST.md\r\n D MAP.md\r\n M README.md\r\n D REQUIREMENTS.md\r\n M ROADMAP.md\r\n D SECURITY.md\r\n D TELEMETRY.md\r\n D client.go\r\n D constants.go\r\n M contracts.go\r\n M main.go\r\n M models.go\r\n?? audit_chismoso.ps1\r\n?? audit_report_ultra.json\r\n?? cmd/\r\n?? docs/\r\n?? go.mod\r\n?? internal/\r\n?? scripts/",
-                         "Timestamp":  "2026-09-11T16:23:54.0776340-07:00"
+                         "Evidence":  "M audit_report_ultra.json\r\n M audit_ultra-mitotero.ps1\r\n D client.go\r\n D cmd/audit/desktop.ini\r\n D cmd/delivery/desktop.ini\r\n D cmd/desktop.ini\r\n D cmd/gateway/desktop.ini\r\n D cmd/image/desktop.ini\r\n D cmd/reader/desktop.ini\r\n D cmd/result/desktop.ini\r\n D cmd/security/desktop.ini\r\n D cmd/storage/desktop.ini\r\n D cmd/study/desktop.ini\r\n D constants.go\r\n D contracts.go\r\n D docs/desktop.ini\r\n D internal/contracts/desktop.ini\r\n D internal/desktop.ini\r\n D internal/models/desktop.ini\r\n M internal/models/models.go\r\n M internal/shared/constants.go\r\n D internal/shared/desktop.ini\r\n M internal/transport/client.go\r\n D internal/transport/desktop.ini\r\n D main.go\r\n D models.go\r\n D scripts/desktop.ini\r\n D scripts/main.go\r\n?? internal/transport/main_test.go",
+                         "Timestamp":  "2026-09-16T20:41:20.7923549-07:00"
                      },
                      {
-                         "Code":  "RXD-DOC-ROOT-001",
-                         "Category":  "DOC_NOT_IN_EXPECTED_ROOT",
-                         "Description":  "ARCHITECTURE.md no se encontró en la raíz esperada, pero existe una copia en docs\\. El hallazgo se limita a ubicación; no se afirma inexistencia global.",
-                         "Severity":  "CRITICAL",
-                         "EvidenceScope":  "repository root",
-                         "Evidence":  "Y:\\Documentos\\GitHub\\RXDistpach\\docs\\ARCHITECTURE.md",
-                         "Timestamp":  "2026-09-11T16:23:54.0896451-07:00"
+                         "Code":  "RXD-TEST-MISSING",
+                         "Category":  "NO_TEST_FILES",
+                         "Description":  "El microservicio audit no posee archivos de prueba _test.go.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\audit",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T20:41:20.8803648-07:00"
                      },
                      {
-                         "Code":  "RXD-DOC-ROOT-001",
-                         "Category":  "DOC_NOT_IN_EXPECTED_ROOT",
-                         "Description":  "REQUIREMENTS.md no se encontró en la raíz esperada, pero existe una copia en docs\\. El hallazgo se limita a ubicación; no se afirma inexistencia global.",
-                         "Severity":  "CRITICAL",
-                         "EvidenceScope":  "repository root",
-                         "Evidence":  "Y:\\Documentos\\GitHub\\RXDistpach\\docs\\REQUIREMENTS.md",
-                         "Timestamp":  "2026-09-11T16:23:54.0946496-07:00"
+                         "Code":  "RXD-TEST-MISSING",
+                         "Category":  "NO_TEST_FILES",
+                         "Description":  "El microservicio gateway no posee archivos de prueba _test.go.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\gateway",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T20:41:20.8942098-07:00"
                      },
                      {
-                         "Code":  "RXD-DOC-ROOT-001",
-                         "Category":  "DOC_NOT_IN_EXPECTED_ROOT",
-                         "Description":  "MAP.md no se encontró en la raíz esperada, pero existe una copia en docs\\. El hallazgo se limita a ubicación; no se afirma inexistencia global.",
-                         "Severity":  "CRITICAL",
-                         "EvidenceScope":  "repository root",
-                         "Evidence":  "Y:\\Documentos\\GitHub\\RXDistpach\\docs\\MAP.md",
-                         "Timestamp":  "2026-09-11T16:23:54.1096631-07:00"
+                         "Code":  "RXD-TEST-MISSING",
+                         "Category":  "NO_TEST_FILES",
+                         "Description":  "El microservicio image no posee archivos de prueba _test.go.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\image",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T20:41:20.8993102-07:00"
                      },
                      {
-                         "Code":  "RXD-DOC-ROOT-001",
-                         "Category":  "DOC_NOT_IN_EXPECTED_ROOT",
-                         "Description":  "SECURITY.md no se encontró en la raíz esperada, pero existe una copia en docs\\. El hallazgo se limita a ubicación; no se afirma inexistencia global.",
-                         "Severity":  "CRITICAL",
-                         "EvidenceScope":  "repository root",
-                         "Evidence":  "Y:\\Documentos\\GitHub\\RXDistpach\\docs\\SECURITY.md",
-                         "Timestamp":  "2026-09-11T16:23:54.1136668-07:00"
+                         "Code":  "RXD-TEST-MISSING",
+                         "Category":  "NO_TEST_FILES",
+                         "Description":  "El microservicio security no posee archivos de prueba _test.go.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\security",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T20:41:20.9133300-07:00"
                      },
                      {
-                         "Code":  "MITOTE-BOM-001",
-                         "Category":  "UTF8_BOM_DETECTED",
-                         "Description":  "Archivo UTF-8 con BOM detectado. Se reporta como característica de codificación, no como corrupción.",
-                         "Severity":  "LOW",
-                         "EvidenceScope":  "filesystem",
-                         "Evidence":  "Y:\\Documentos\\GitHub\\RXDistpach\\audit_report_ultra.json",
-                         "Timestamp":  "2026-09-11T16:23:54.1507004-07:00"
+                         "Code":  "RXD-TEST-MISSING",
+                         "Category":  "NO_TEST_FILES",
+                         "Description":  "El microservicio storage no posee archivos de prueba _test.go.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\storage",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T20:41:20.9173307-07:00"
+                     },
+                     {
+                         "Code":  "RXD-TEST-MISSING",
+                         "Category":  "NO_TEST_FILES",
+                         "Description":  "El microservicio study no posee archivos de prueba _test.go.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\study",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T20:41:20.9213429-07:00"
+                     },
+                     {
+                         "Code":  "RXD-RES-002",
+                         "Category":  "UNHANDLED_CLIENT_ERRORS",
+                         "Description":  "Llamadas a clientes inter-servicio descartadas con _ =.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "Go source",
+                         "Evidence":  "main.go",
+                         "Timestamp":  "2026-09-16T20:41:21.0023256-07:00"
+                     },
+                     {
+                         "Code":  "RXD-SEC-001",
+                         "Category":  "MISSING_BODY_LIMIT",
+                         "Description":  "Servicio HTTP carece de http.MaxBytesReader (riesgo DoS por memoria).",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "cmd/*/main.go",
+                         "Evidence":  ".\\cmd\\audit\\main.go; .\\cmd\\delivery\\main.go; .\\cmd\\gateway\\main.go; .\\cmd\\image\\main.go; .\\cmd\\reader\\main.go; .\\cmd\\result\\main.go; .\\cmd\\security\\main.go; .\\cmd\\storage\\main.go; .\\cmd\\study\\main.go",
+                         "Timestamp":  "2026-09-16T20:41:21.0053317-07:00"
                      },
                      {
                          "Code":  "RXD-WARN-005",
                          "Category":  "SHA256_USAGE_NOT_DETECTED",
-                         "Description":  "El scanner no encontró import ni uso directo verificable de SHA-256 en los archivos Go inspeccionados.",
+                         "Description":  "No se encontró uso de SHA-256.",
                          "Severity":  "MEDIUM",
                          "EvidenceScope":  "Go source",
                          "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5165381-07:00"
+                         "Timestamp":  "2026-09-16T20:41:21.0873264-07:00"
                      },
                      {
-                         "Code":  "RXD-WARN-006",
-                         "Category":  "DICOM_REJECT_NOT_DETECTED",
-                         "Description":  "El scanner no encontró referencia explícita a A-ASSOCIATE-RJ en los archivos Go inspeccionados. Esto no demuestra por sí solo que el comportamiento protocolario sea inexistente.",
+                         "Code":  "RXD-WARN-006A",
+                         "Category":  "DICOM_REJECT_DECLARED_ONLY",
+                         "Description":  "Constante A-ASSOCIATE-RJ declarada pero sin consumo funcional comprobado.",
                          "Severity":  "MEDIUM",
                          "EvidenceScope":  "Go source",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5365557-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027event_timestamp\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5405594-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027event_action\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5425611-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027event_outcome\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5435625-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027event_error_code\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5455644-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027user_id\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5465649-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027source_ip\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5475660-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027source_ae_title\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5495679-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027destination_ip\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5505684-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027destination_ae_title\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5515695-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027patient_id\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5535711-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027study_instance_uid\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5545721-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027accession_number\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5565741-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027number_of_instances\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5575752-07:00"
-                     },
-                     {
-                         "Code":  "RXD-EPHI-001",
-                         "Category":  "EPHI_FIELD_NOT_DETECTED",
-                         "Description":  "El scanner no encontró el campo esperado \u0027security_tls_status\u0027 como tag JSON dentro del alcance de modelos inspeccionado.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Y:\\Documentos\\GitHub\\RXDistpach\\internal\\models\\models.go",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-11T16:23:54.5595770-07:00"
+                         "Evidence":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\shared\\constants.go:20",
+                         "Timestamp":  "2026-09-16T20:41:21.1313294-07:00"
                      },
                      {
                          "Code":  "RXD-ERR-005",
                          "Category":  "GO_BUILD_FAIL",
-                         "Description":  "go build ./... no completó correctamente. Revisar la salida real de la herramienta; este hallazgo no se clasifica automáticamente como error de sintaxis.",
+                         "Description":  "go build ./... no completó correctamente. Revisar la salida real de la herramienta.",
                          "Severity":  "HIGH",
                          "EvidenceScope":  "go workspace",
-                         "Evidence":  "go.exe : found packages contracts (contracts.go) and main (main.go) in \r\nY:\\Documentos\\GitHub\\RXDistpach\r\nEn línea: 136 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (found packages ...tHub\\RXDistpach:Str \r\n   ing) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError",
-                         "Timestamp":  "2026-09-11T16:23:59.4563455-07:00"
+                         "Evidence":  "go.exe : cmd\\reader\\main.go:13:2: found packages transport \r\n(client.go) and main (main_test.go) in C:\\Users\\CMSoluciones\\Do\r\ncuments\\GitHub\\RXDistpach\\internal\\transport\r\nEn línea: 135 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (cmd\\reader\\main.. \r\n   .ernal\\transport:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError",
+                         "Timestamp":  "2026-09-16T20:41:21.8905416-07:00"
                      },
                      {
                          "Code":  "RXD-ERR-007",
                          "Category":  "GO_TEST_FAIL",
-                         "Description":  "go test ./... -count=1 no completó correctamente. Revisar la salida real de la herramienta; este hallazgo no se clasifica automáticamente como error de sintaxis.",
+                         "Description":  "go test ./... -count=1 no completó correctamente. Revisar la salida real de la herramienta.",
                          "Severity":  "HIGH",
                          "EvidenceScope":  "go workspace",
-                         "Evidence":  "FAIL\trx-dispatch [setup failed]\r\ngo.exe : # rx-dispatch\r\nEn línea: 136 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (# rx-dispatch:String) [], RemoteExcep \r\n   tion\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nfound packages contracts (contracts.go) and main (main.go) in \r\nY:\\Documentos\\GitHub\\RXDistpach\r\n# rx-dispatch/cmd/delivery [rx-dispatch/cmd/delivery.test]\r\ncmd\\delivery\\main_test.go:34:10: undefined: DeliveryServer\r\n# rx-dispatch/cmd/reader [rx-dispatch/cmd/reader.test]\r\ncmd\\reader\\main_test.go:14:2: \"rx-dispatch/internal/transport\" imported and not \r\nused\r\n# rx-dispatch/cmd/result [rx-dispatch/cmd/result.test]\r\ncmd\\result\\main_test.go:13:2: \"rx-dispatch/internal/transport\" imported and not \r\nused\r\n?   \trx-dispatch/cmd/audit\t[no test files]\r\nFAIL\trx-dispatch/cmd/delivery [build failed]\r\n?   \trx-dispatch/cmd/gateway\t[no test files]\r\n?   \trx-dispatch/cmd/image\t[no test files]\r\nFAIL\trx-dispatch/cmd/reader [build failed]\r\nFAIL\trx-dispatch/cmd/result [build failed]\r\n?   \trx-dispatch/cmd/security\t[no test files]\r\n?   \trx-dispatch/cmd/storage\t[no test files]\r\n?   \trx-dispatch/cmd/study\t[no test files]\r\n?   \trx-dispatch/internal/contracts\t[no test files]\r\n?   \trx-dispatch/internal/models\t[no test files]\r\n?   \trx-dispatch/internal/shared\t[no test files]\r\n?   \trx-dispatch/internal/transport\t[no test files]\r\n2026/09/11 16:24:02 [rx-reader] Received analysis request for StudyID: TEST-123\r\npanic: runtime error: invalid memory address or nil pointer dereference\r\n[signal 0xc0000005 code=0x0 addr=0x18 pc=0x7ff7d78f6385]\r\n\r\ngoroutine 9 [running]:\r\nrx-dispatch/scripts.(*server).analyzeHandler.func1()\r\n\tY:/Documentos/GitHub/RXDistpach/scripts/main.go:101 +0x145\r\ncreated by rx-dispatch/scripts.(*server).analyzeHandler in goroutine 8\r\n\tY:/Documentos/GitHub/RXDistpach/scripts/main.go:93 +0x49d\r\nFAIL\trx-dispatch/scripts\t0.351s\r\nFAIL",
-                         "Timestamp":  "2026-09-11T16:24:02.6887628-07:00"
+                         "Evidence":  "FAIL\trx-dispatch/cmd/reader [setup failed]\r\nFAIL\trx-dispatch/cmd/result [setup failed]\r\ngo.exe : # rx-dispatch/cmd/reader\r\nEn línea: 135 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (# rx-dispatch/cmd \r\n   /reader:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\ncmd\\reader\\main.go:13:2: found packages transport (client.go) \r\nand main (main_test.go) in C:\\Users\\CMSoluciones\\Documents\\GitH\r\nub\\RXDistpach\\internal\\transport\r\n# rx-dispatch/cmd/result\r\ncmd\\reader\\main.go:13:2: found packages transport (client.go) \r\nand main (main_test.go) in C:\\Users\\CMSoluciones\\Documents\\GitH\r\nub\\RXDistpach\\internal\\transport\r\n# rx-dispatch/internal/transport\r\ncmd\\reader\\main.go:13:2: found packages transport (client.go) \r\nand main (main_test.go) in C:\\Users\\CMSoluciones\\Documents\\GitH\r\nub\\RXDistpach\\internal\\transport\r\nFAIL\trx-dispatch/internal/transport [setup failed]\r\n?   \trx-dispatch/cmd/audit\t[no test files]\r\nok  \trx-dispatch/cmd/delivery\t1.466s\r\n?   \trx-dispatch/cmd/gateway\t[no test files]\r\n?   \trx-dispatch/cmd/image\t[no test files]\r\n?   \trx-dispatch/cmd/security\t[no test files]\r\n?   \trx-dispatch/cmd/storage\t[no test files]\r\n?   \trx-dispatch/cmd/study\t[no test files]\r\n?   \trx-dispatch/internal/contracts\t[no test files]\r\n?   \trx-dispatch/internal/models\t[no test files]\r\n?   \trx-dispatch/internal/shared\t[no test files]\r\nFAIL",
+                         "Timestamp":  "2026-09-16T20:41:24.5229567-07:00"
                      },
                      {
                          "Code":  "RXD-ERR-006",
                          "Category":  "GO_VET_FAIL",
-                         "Description":  "go vet ./... no completó correctamente. Revisar la salida real de la herramienta; este hallazgo no se clasifica automáticamente como error de sintaxis.",
+                         "Description":  "go vet ./... no completó correctamente. Revisar la salida real de la herramienta.",
                          "Severity":  "HIGH",
                          "EvidenceScope":  "go workspace",
-                         "Evidence":  "go.exe : found packages contracts (contracts.go) and main (main.go) in \r\nY:\\Documentos\\GitHub\\RXDistpach\r\nEn línea: 136 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (found packages ...tHub\\RXDistpach:Str \r\n   ing) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError",
-                         "Timestamp":  "2026-09-11T16:24:04.8620650-07:00"
+                         "Evidence":  "go.exe : cmd\\reader\\main.go:13:2: found packages transport \r\n(client.go) and main (main_test.go) in C:\\Users\\CMSoluciones\\Do\r\ncuments\\GitHub\\RXDistpach\\internal\\transport\r\nEn línea: 135 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (cmd\\reader\\main.. \r\n   .ernal\\transport:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError",
+                         "Timestamp":  "2026-09-16T20:41:24.7852676-07:00"
                      }
                  ]
 }
