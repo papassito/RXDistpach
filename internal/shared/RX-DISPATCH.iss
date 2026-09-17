@@ -1,24 +1,22 @@
 ; RX-DISPATCH Inno Setup Script
 
-; -- Defines --
 #define MyAppName "RX DISPATCH"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "KLIK Soft PRO"
-#define MyAppExeName "start.ps1"
 
 [Setup]
 AppId={{F2A7A6B3-9F1E-4D7C-8A3D-1B6C0E7F8D4A}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-DefaultDirName={autopf}\{#MyAppPublisher}\{#MyAppName}
+DefaultDirName={autopf}\KLIK Soft PRO\RX DISPATCH
 DefaultGroupName={#MyAppName}
 OutputDir=output
 OutputBaseFilename=RX-DISPATCH-Setup
-Compression=lzma
+Compression=lzma2
 SolidCompression=yes
-WizardStyle=modern
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -28,15 +26,14 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-; Source path is relative to the .iss file. Go up one level to the project root, then into dist/.
 Source: "..\dist\RX-DISPATCH\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\Start {#MyAppName}"; Filename: "{app}\scripts\start.ps1"
-Name: "{group}\Stop {#MyAppName}"; Filename: "{app}\scripts\stop.ps1"
+Name: "{group}\Start {#MyAppName}"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\scripts\start.ps1"""; WorkingDir: "{app}"
+Name: "{group}\Stop {#MyAppName}"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\scripts\stop.ps1"""; WorkingDir: "{app}"
 Name: "{group}\Open {#MyAppName} Folder"; Filename: "{app}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\scripts\start.ps1"; Tasks: desktopicon
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\scripts\start.ps1"""; WorkingDir: "{app}"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\README.txt"; Description: "{cm:LaunchProgram,View Readme}"; Flags: nowait postinstall shellexec skipifsilent
@@ -45,4 +42,5 @@ Filename: "{app}\README.txt"; Description: "{cm:LaunchProgram,View Readme}"; Fla
 Type: files; Name: "{app}\.pids\*.pid"
 Type: dirifempty; Name: "{app}\.pids"
 Type: dirifempty; Name: "{app}\logs"
-; We intentionally do not delete the 'data' directory on uninstall to preserve user-generated data.
+
+; Do not delete data/ on uninstall.
