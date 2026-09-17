@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"rx-dispatch/internal/contracts"
 	"rx-dispatch/internal/models"
@@ -15,13 +16,12 @@ import (
 
 // mockAuditClient es una implementación falsa del AuditClient para evitar llamadas de red en las pruebas.
 type mockAuditClient struct {
-	lastEvent contracts.RecordAuditEventRequest
+	eventChan chan contracts.RecordAuditEventRequest
 }
 
 // SendEvent es una implementación que captura el evento para su posterior inspección.
 func (m *mockAuditClient) SendEvent(req contracts.RecordAuditEventRequest) error {
-	// En una prueba más avanzada, podríamos verificar que este método fue llamado.
-	m.lastEvent = req
+	m.eventChan <- req
 	return nil
 }
 
@@ -35,8 +35,10 @@ func (m *mockResultClient) ConsolidateReading(req interface{}) error {
 
 func TestAnalyzeHandler(t *testing.T) {
 	// 1. Preparación (Arrange)
-	// Crear una instancia del servidor con clientes falsos (mocks) que puedan capturar datos.
-	mockAudit := &mockAuditClient{}
+	// Crear una instancia del servidor con clientes falsos (mocks) que puedan capturar datos de forma segura.
+	mockAudit := &mockAuditClient{
+		eventChan: make(chan contracts.RecordAuditEventRequest, 1),
+	}
 	srv := &server{
 		auditClient:  mockAudit,
 		resultClient: &mockResultClient{},
@@ -86,13 +88,19 @@ func TestAnalyzeHandler(t *testing.T) {
 		t.Fatalf("handler did not include the mandatory legal warning in the disclaimer")
 	}
 
-	// Verificar el evento de auditoría enviado al mock
-	if mockAudit.lastEvent.Event.StudyInstanceUID != "TEST-123" {
-		t.Errorf("audit event has wrong StudyInstanceUID: got %q want %q", mockAudit.lastEvent.Event.StudyInstanceUID, "TEST-123")
-	}
-	// La solicitud de prueba no es TLS, por lo que el estado debe ser false.
-	if mockAudit.lastEvent.Event.SecurityTLSStatus != false {
-		t.Errorf("audit event has wrong SecurityTLSStatus: got %v want %v", mockAudit.lastEvent.Event.SecurityTLSStatus, false)
+	// Verificar el evento de auditoría recibido a través del canal.
+	// Usamos un select con un temporizador para evitar que la prueba se bloquee indefinidamente.
+	select {
+	case capturedEvent := <-mockAudit.eventChan:
+		if capturedEvent.Event.StudyInstanceUID != "TEST-123" {
+			t.Errorf("audit event has wrong StudyInstanceUID: got %q want %q", capturedEvent.Event.StudyInstanceUID, "TEST-123")
+		}
+		// La solicitud de prueba no es TLS, por lo que el estado debe ser false.
+		if capturedEvent.Event.SecurityTLSStatus != false {
+			t.Errorf("audit event has wrong SecurityTLSStatus: got %v want %v", capturedEvent.Event.SecurityTLSStatus, false)
+		}
+	case <-time.After(1 * time.Second):
+		t.Fatal("timed out waiting for audit event")
 	}
 
 	t.Log("TestAnalyzeHandler passed: Correctly processed request and injected clinical invariant.")
