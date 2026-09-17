@@ -13,28 +13,32 @@ import (
 	"rx-dispatch/internal/shared"
 )
 
-// mockAuditClient es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n falsa del AuditClient para evitar llamadas de red en las pruebas.
-type mockAuditClient struct{}
+// mockAuditClient es una implementación falsa del AuditClient para evitar llamadas de red en las pruebas.
+type mockAuditClient struct {
+	lastEvent contracts.RecordAuditEventRequest
+}
 
-// SendEvent es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n no operativa que satisface la interfaz.
+// SendEvent es una implementación que captura el evento para su posterior inspección.
 func (m *mockAuditClient) SendEvent(req contracts.RecordAuditEventRequest) error {
-	// En una prueba mÃ¡s avanzada, podrÃ­amos verificar que este mÃ©todo fue llamado.
+	// En una prueba más avanzada, podríamos verificar que este método fue llamado.
+	m.lastEvent = req
 	return nil
 }
 
-// mockResultClient es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n falsa del ResultClient para evitar llamadas de red en las pruebas.
+// mockResultClient es una implementación falsa del ResultClient para evitar llamadas de red en las pruebas.
 type mockResultClient struct{}
 
-// ConsolidateReading es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n no operativa que satisface la interfaz.
+// ConsolidateReading es una implementación no operativa que satisface la interfaz.
 func (m *mockResultClient) ConsolidateReading(req interface{}) error {
 	return nil
 }
 
 func TestAnalyzeHandler(t *testing.T) {
-	// 1. PreparaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (Arrange)
-	// Crear una instancia del servidor con clientes falsos (mocks).
+	// 1. Preparación (Arrange)
+	// Crear una instancia del servidor con clientes falsos (mocks) que puedan capturar datos.
+	mockAudit := &mockAuditClient{}
 	srv := &server{
-		auditClient:  &mockAuditClient{},
+		auditClient:  mockAudit,
 		resultClient: &mockResultClient{},
 	}
 
@@ -50,12 +54,12 @@ func TestAnalyzeHandler(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/reader/analyze", bytes.NewReader(body))
 	rr := httptest.NewRecorder()
 
-	// 2. ActuaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (Act)
+	// 2. Actuación (Act)
 	// Llamar al manejador directamente.
 	http.HandlerFunc(srv.analyzeHandler).ServeHTTP(rr, req)
 
-	// 3. AfirmaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (Assert)
-	// Verificar que el cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³digo de estado es 200 OK.
+	// 3. Afirmación (Assert)
+	// Verificar que el código de estado es 200 OK.
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
@@ -71,15 +75,24 @@ func TestAnalyzeHandler(t *testing.T) {
 		t.Errorf("handler returned unexpected studyId: got %v want %v", response.StudyID, "TEST-123")
 	}
 
-	// Verificar la INVARIANTE CLÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂNICA: la presencia del disclaimer.
+	// Verificar la INVARIANTE CLÍNICA: la presencia del disclaimer.
 	if response.Disclaimer.ReadingType != shared.ReadingTypeGenericAutomated {
 		t.Errorf("handler did not inject correct ReadingType: got %v want %v", response.Disclaimer.ReadingType, shared.ReadingTypeGenericAutomated)
 	}
 	if response.Disclaimer.SignatureStatus != shared.StatusWithoutMedicalSignature {
 		t.Errorf("handler did not inject correct SignatureStatus: got %v want %v", response.Disclaimer.SignatureStatus, shared.StatusWithoutMedicalSignature)
 	}
-	if !strings.Contains(response.Disclaimer.FullMandatoryLegalWarning, "no constituye un diagnÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³stico mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©dico") {
+	if !strings.Contains(response.Disclaimer.FullMandatoryLegalWarning, "no constituye un diagnóstico médico") {
 		t.Fatalf("handler did not include the mandatory legal warning in the disclaimer")
+	}
+
+	// Verificar el evento de auditoría enviado al mock
+	if mockAudit.lastEvent.Event.StudyInstanceUID != "TEST-123" {
+		t.Errorf("audit event has wrong StudyInstanceUID: got %q want %q", mockAudit.lastEvent.Event.StudyInstanceUID, "TEST-123")
+	}
+	// La solicitud de prueba no es TLS, por lo que el estado debe ser false.
+	if mockAudit.lastEvent.Event.SecurityTLSStatus != false {
+		t.Errorf("audit event has wrong SecurityTLSStatus: got %v want %v", mockAudit.lastEvent.Event.SecurityTLSStatus, false)
 	}
 
 	t.Log("TestAnalyzeHandler passed: Correctly processed request and injected clinical invariant.")

@@ -105,12 +105,13 @@ func (s *server) analyzeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 4. AuditorÃ­a (sÃ­ncrona, con manejo de errores)
 	event := models.AuditEvent{
-		EventTimestamp:   time.Now().UTC(),
-		EventAction:      "GENERIC_READING_GENERATED",
-		EventOutcome:     "SUCCESS",
-		UserID:           serviceName,
-		SourceIP:         r.RemoteAddr,
-		StudyInstanceUID: req.StudyID,
+		EventTimestamp:    time.Now().UTC(),
+		EventAction:       "GENERIC_READING_GENERATED",
+		EventOutcome:      "SUCCESS",
+		UserID:            serviceName,
+		SourceIP:          r.RemoteAddr,
+		StudyInstanceUID:  req.StudyID,
+		SecurityTLSStatus: r.TLS != nil,
 	}
 	if err := s.auditClient.SendEvent(contracts.RecordAuditEventRequest{Event: event}); err != nil {
 		// No fallar la solicitud principal, pero registrar el fallo de auditorÃ­a.

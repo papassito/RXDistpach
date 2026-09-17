@@ -12,20 +12,20 @@ import (
 	"rx-dispatch/internal/shared"
 )
 
-// mockDeliveryClient es una implementaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n falsa del DeliveryClient para pruebas.
+// mockDeliveryClient es una implementación falsa del DeliveryClient para pruebas.
 type mockDeliveryClient struct {
 	callCount int
 }
 
-// EnqueueResult simula el envÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­o, contando las veces que es llamado.
+// EnqueueResult simula el envío, contando las veces que es llamado.
 func (m *mockDeliveryClient) EnqueueResult(req interface{}) error {
 	m.callCount++
 	return nil
 }
 
 func TestConsolidateHandler(t *testing.T) {
-	// --- Caso de ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°xito ---
-	// Crear una lectura genÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©rica de prueba.
+	// --- Caso de éxito ---
+	// Crear una lectura genérica de prueba.
 	testReading := models.GenericReading{
 		StudyID:          "RESULT-TEST-001",
 		AnatomicalRegion: "SKULL",
@@ -53,22 +53,20 @@ func TestConsolidateHandler(t *testing.T) {
 	// Llamar al manejador directamente.
 	srv.consolidateHandler(rrPost, reqPost)
 
-	// Verificar que el cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³digo de estado es 200 OK.
+	// Verificar que el código de estado es 200 OK.
 	// Para este manejador (que actualmente solo registra en log),
-	// una respuesta 200 OK es suficiente para confirmar que recibiÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ y
-	// decodificÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ el cuerpo de la solicitud correctamente sin errores.
+	// una respuesta 200 OK es suficiente para confirmar que recibió y
+	// decodificó el cuerpo de la solicitud correctamente sin errores.
 	if status := rrPost.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
 	// Verificar que el cliente de delivery fue llamado.
-	// NOTA: En un sistema concurrente real, esto requerirÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­a un mecanismo de sincronizaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n (ej. WaitGroup).
-	// Para esta prueba simple, asumimos que la goroutine se ejecuta rÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡pidamente.
 	if mockClient.callCount < 1 {
 		t.Errorf("delivery client was not called")
 	}
 
-	// --- Caso de Error: MÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©todo Incorrecto ---
+	// --- Caso de Error: Método Incorrecto ---
 	reqGet := httptest.NewRequest(http.MethodGet, "/result/consolidate", nil)
 	rrGet := httptest.NewRecorder()
 	srv.consolidateHandler(rrGet, reqGet)

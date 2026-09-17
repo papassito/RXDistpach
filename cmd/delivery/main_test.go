@@ -13,7 +13,7 @@ import (
 )
 
 func TestEnqueueHandler(t *testing.T) {
-	// --- Caso de ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â°xito ---
+	// --- Caso de éxito ---
 	testReading := models.GenericReading{
 		StudyID:          "DELIVERY-TEST-001",
 		AnatomicalRegion: "KNEE",
@@ -34,13 +34,13 @@ func TestEnqueueHandler(t *testing.T) {
 	srv := &server{}
 	srv.enqueueHandler(rrPost, reqPost)
 
-	// Verificar que el cÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³digo de estado es 202 Accepted.
+	// Verificar que el código de estado es 202 Accepted.
 	if status := rrPost.Code; status != http.StatusAccepted {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusAccepted)
 	}
 
-	// --- Caso de Error: MÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©todo Incorrecto ---
+	// --- Caso de Error: Método Incorrecto ---
 	reqGet := httptest.NewRequest(http.MethodGet, "/delivery/enqueue", nil)
 	rrGet := httptest.NewRecorder()
 	srv.enqueueHandler(rrGet, reqGet)

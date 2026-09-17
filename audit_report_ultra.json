@@ -1,26 +1,26 @@
 ﻿{
-    "Timestamp":  "2026-09-16T20:41:24.8152566-07:00",
-    "Status":  "FAIL",
+    "Timestamp":  "2026-09-16T21:02:56.4026688-07:00",
+    "Status":  "PASS_WITH_WARNINGS",
     "Scope":  {
                   "RepositoryRoot":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach",
                   "RequireBaselineAtRoot":  true,
                   "Statement":  "Los hallazgos se limitan al alcance inspeccionado. NOT_DETECTED no implica inexistencia global."
               },
     "Metrics":  {
-                    "TotalFilesScanned":  62,
-                    "GoFilesScanned":  18,
-                    "TotalLinesOfCode":  1069,
-                    "PassedChecks":  37,
+                    "TotalFilesScanned":  69,
+                    "GoFilesScanned":  23,
+                    "TotalLinesOfCode":  1310,
+                    "PassedChecks":  41,
                     "Informational":  0,
-                    "Warnings":  11,
-                    "HighErrors":  3,
+                    "Warnings":  10,
+                    "HighErrors":  0,
                     "CriticalErrors":  0,
-                    "BlockingFindings":  3
+                    "BlockingFindings":  0
                 },
     "ExecutionGate":  {
-                          "GoBuild":  false,
-                          "GoTest":  false,
-                          "GoVet":  false
+                          "GoBuild":  true,
+                          "GoTest":  true,
+                          "GoVet":  true
                       },
     "Findings":  [
                      {
@@ -29,71 +29,8 @@
                          "Description":  "El working tree contiene cambios sin commit y/o archivos no rastreados.",
                          "Severity":  "MEDIUM",
                          "EvidenceScope":  "git working tree",
-                         "Evidence":  "M audit_report_ultra.json\r\n M audit_ultra-mitotero.ps1\r\n D client.go\r\n D cmd/audit/desktop.ini\r\n D cmd/delivery/desktop.ini\r\n D cmd/desktop.ini\r\n D cmd/gateway/desktop.ini\r\n D cmd/image/desktop.ini\r\n D cmd/reader/desktop.ini\r\n D cmd/result/desktop.ini\r\n D cmd/security/desktop.ini\r\n D cmd/storage/desktop.ini\r\n D cmd/study/desktop.ini\r\n D constants.go\r\n D contracts.go\r\n D docs/desktop.ini\r\n D internal/contracts/desktop.ini\r\n D internal/desktop.ini\r\n D internal/models/desktop.ini\r\n M internal/models/models.go\r\n M internal/shared/constants.go\r\n D internal/shared/desktop.ini\r\n M internal/transport/client.go\r\n D internal/transport/desktop.ini\r\n D main.go\r\n D models.go\r\n D scripts/desktop.ini\r\n D scripts/main.go\r\n?? internal/transport/main_test.go",
-                         "Timestamp":  "2026-09-16T20:41:20.7923549-07:00"
-                     },
-                     {
-                         "Code":  "RXD-TEST-MISSING",
-                         "Category":  "NO_TEST_FILES",
-                         "Description":  "El microservicio audit no posee archivos de prueba _test.go.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\audit",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T20:41:20.8803648-07:00"
-                     },
-                     {
-                         "Code":  "RXD-TEST-MISSING",
-                         "Category":  "NO_TEST_FILES",
-                         "Description":  "El microservicio gateway no posee archivos de prueba _test.go.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\gateway",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T20:41:20.8942098-07:00"
-                     },
-                     {
-                         "Code":  "RXD-TEST-MISSING",
-                         "Category":  "NO_TEST_FILES",
-                         "Description":  "El microservicio image no posee archivos de prueba _test.go.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\image",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T20:41:20.8993102-07:00"
-                     },
-                     {
-                         "Code":  "RXD-TEST-MISSING",
-                         "Category":  "NO_TEST_FILES",
-                         "Description":  "El microservicio security no posee archivos de prueba _test.go.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\security",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T20:41:20.9133300-07:00"
-                     },
-                     {
-                         "Code":  "RXD-TEST-MISSING",
-                         "Category":  "NO_TEST_FILES",
-                         "Description":  "El microservicio storage no posee archivos de prueba _test.go.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\storage",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T20:41:20.9173307-07:00"
-                     },
-                     {
-                         "Code":  "RXD-TEST-MISSING",
-                         "Category":  "NO_TEST_FILES",
-                         "Description":  "El microservicio study no posee archivos de prueba _test.go.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\cmd\\study",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T20:41:20.9213429-07:00"
-                     },
-                     {
-                         "Code":  "RXD-RES-002",
-                         "Category":  "UNHANDLED_CLIENT_ERRORS",
-                         "Description":  "Llamadas a clientes inter-servicio descartadas con _ =.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Go source",
-                         "Evidence":  "main.go",
-                         "Timestamp":  "2026-09-16T20:41:21.0023256-07:00"
+                         "Evidence":  "M audit_report_ultra.json\r\n M audit_ultra-mitotero.ps1\r\n M cmd/delivery/main_test.go\r\n M cmd/reader/main.go\r\n M cmd/reader/main_test.go\r\n M cmd/result/main_test.go\r\n M internal/models/models.go",
+                         "Timestamp":  "2026-09-16T21:02:46.9320363-07:00"
                      },
                      {
                          "Code":  "RXD-SEC-001",
@@ -101,17 +38,8 @@
                          "Description":  "Servicio HTTP carece de http.MaxBytesReader (riesgo DoS por memoria).",
                          "Severity":  "MEDIUM",
                          "EvidenceScope":  "cmd/*/main.go",
-                         "Evidence":  ".\\cmd\\audit\\main.go; .\\cmd\\delivery\\main.go; .\\cmd\\gateway\\main.go; .\\cmd\\image\\main.go; .\\cmd\\reader\\main.go; .\\cmd\\result\\main.go; .\\cmd\\security\\main.go; .\\cmd\\storage\\main.go; .\\cmd\\study\\main.go",
-                         "Timestamp":  "2026-09-16T20:41:21.0053317-07:00"
-                     },
-                     {
-                         "Code":  "RXD-WARN-005",
-                         "Category":  "SHA256_USAGE_NOT_DETECTED",
-                         "Description":  "No se encontró uso de SHA-256.",
-                         "Severity":  "MEDIUM",
-                         "EvidenceScope":  "Go source",
-                         "Evidence":  "",
-                         "Timestamp":  "2026-09-16T20:41:21.0873264-07:00"
+                         "Evidence":  ".\\cmd\\audit\\main.go; .\\cmd\\gateway\\main.go; .\\cmd\\image\\main.go; .\\cmd\\security\\main.go; .\\cmd\\storage\\main.go; .\\cmd\\study\\main.go",
+                         "Timestamp":  "2026-09-16T21:02:47.0963036-07:00"
                      },
                      {
                          "Code":  "RXD-WARN-006A",
@@ -120,34 +48,70 @@
                          "Severity":  "MEDIUM",
                          "EvidenceScope":  "Go source",
                          "Evidence":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\shared\\constants.go:20",
-                         "Timestamp":  "2026-09-16T20:41:21.1313294-07:00"
+                         "Timestamp":  "2026-09-16T21:02:47.1723148-07:00"
                      },
                      {
-                         "Code":  "RXD-ERR-005",
-                         "Category":  "GO_BUILD_FAIL",
-                         "Description":  "go build ./... no completó correctamente. Revisar la salida real de la herramienta.",
-                         "Severity":  "HIGH",
-                         "EvidenceScope":  "go workspace",
-                         "Evidence":  "go.exe : cmd\\reader\\main.go:13:2: found packages transport \r\n(client.go) and main (main_test.go) in C:\\Users\\CMSoluciones\\Do\r\ncuments\\GitHub\\RXDistpach\\internal\\transport\r\nEn línea: 135 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (cmd\\reader\\main.. \r\n   .ernal\\transport:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError",
-                         "Timestamp":  "2026-09-16T20:41:21.8905416-07:00"
+                         "Code":  "RXD-EPHI-001",
+                         "Category":  "EPHI_FIELD_NOT_DETECTED",
+                         "Description":  "Campo \u0027event_error_code\u0027 no detectado.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T21:02:47.1923256-07:00"
                      },
                      {
-                         "Code":  "RXD-ERR-007",
-                         "Category":  "GO_TEST_FAIL",
-                         "Description":  "go test ./... -count=1 no completó correctamente. Revisar la salida real de la herramienta.",
-                         "Severity":  "HIGH",
-                         "EvidenceScope":  "go workspace",
-                         "Evidence":  "FAIL\trx-dispatch/cmd/reader [setup failed]\r\nFAIL\trx-dispatch/cmd/result [setup failed]\r\ngo.exe : # rx-dispatch/cmd/reader\r\nEn línea: 135 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (# rx-dispatch/cmd \r\n   /reader:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\ncmd\\reader\\main.go:13:2: found packages transport (client.go) \r\nand main (main_test.go) in C:\\Users\\CMSoluciones\\Documents\\GitH\r\nub\\RXDistpach\\internal\\transport\r\n# rx-dispatch/cmd/result\r\ncmd\\reader\\main.go:13:2: found packages transport (client.go) \r\nand main (main_test.go) in C:\\Users\\CMSoluciones\\Documents\\GitH\r\nub\\RXDistpach\\internal\\transport\r\n# rx-dispatch/internal/transport\r\ncmd\\reader\\main.go:13:2: found packages transport (client.go) \r\nand main (main_test.go) in C:\\Users\\CMSoluciones\\Documents\\GitH\r\nub\\RXDistpach\\internal\\transport\r\nFAIL\trx-dispatch/internal/transport [setup failed]\r\n?   \trx-dispatch/cmd/audit\t[no test files]\r\nok  \trx-dispatch/cmd/delivery\t1.466s\r\n?   \trx-dispatch/cmd/gateway\t[no test files]\r\n?   \trx-dispatch/cmd/image\t[no test files]\r\n?   \trx-dispatch/cmd/security\t[no test files]\r\n?   \trx-dispatch/cmd/storage\t[no test files]\r\n?   \trx-dispatch/cmd/study\t[no test files]\r\n?   \trx-dispatch/internal/contracts\t[no test files]\r\n?   \trx-dispatch/internal/models\t[no test files]\r\n?   \trx-dispatch/internal/shared\t[no test files]\r\nFAIL",
-                         "Timestamp":  "2026-09-16T20:41:24.5229567-07:00"
+                         "Code":  "RXD-EPHI-001",
+                         "Category":  "EPHI_FIELD_NOT_DETECTED",
+                         "Description":  "Campo \u0027source_ae_title\u0027 no detectado.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T21:02:47.2043093-07:00"
                      },
                      {
-                         "Code":  "RXD-ERR-006",
-                         "Category":  "GO_VET_FAIL",
-                         "Description":  "go vet ./... no completó correctamente. Revisar la salida real de la herramienta.",
-                         "Severity":  "HIGH",
-                         "EvidenceScope":  "go workspace",
-                         "Evidence":  "go.exe : cmd\\reader\\main.go:13:2: found packages transport \r\n(client.go) and main (main_test.go) in C:\\Users\\CMSoluciones\\Do\r\ncuments\\GitHub\\RXDistpach\\internal\\transport\r\nEn línea: 135 Carácter: 19\r\n+         $output = \u0026 go @Arguments 2\u003e\u00261\r\n+                   ~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (cmd\\reader\\main.. \r\n   .ernal\\transport:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError",
-                         "Timestamp":  "2026-09-16T20:41:24.7852676-07:00"
+                         "Code":  "RXD-EPHI-001",
+                         "Category":  "EPHI_FIELD_NOT_DETECTED",
+                         "Description":  "Campo \u0027destination_ae_title\u0027 no detectado.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T21:02:47.2123074-07:00"
+                     },
+                     {
+                         "Code":  "RXD-EPHI-001",
+                         "Category":  "EPHI_FIELD_NOT_DETECTED",
+                         "Description":  "Campo \u0027patient_id\u0027 no detectado.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T21:02:47.2163129-07:00"
+                     },
+                     {
+                         "Code":  "RXD-EPHI-001",
+                         "Category":  "EPHI_FIELD_NOT_DETECTED",
+                         "Description":  "Campo \u0027study_instance_uid\u0027 no detectado.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T21:02:47.2213102-07:00"
+                     },
+                     {
+                         "Code":  "RXD-EPHI-001",
+                         "Category":  "EPHI_FIELD_NOT_DETECTED",
+                         "Description":  "Campo \u0027accession_number\u0027 no detectado.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T21:02:47.2253196-07:00"
+                     },
+                     {
+                         "Code":  "RXD-EPHI-001",
+                         "Category":  "EPHI_FIELD_NOT_DETECTED",
+                         "Description":  "Campo \u0027number_of_instances\u0027 no detectado.",
+                         "Severity":  "MEDIUM",
+                         "EvidenceScope":  "C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\audit_event.go; C:\\Users\\CMSoluciones\\Documents\\GitHub\\RXDistpach\\internal\\models\\models.go",
+                         "Evidence":  "",
+                         "Timestamp":  "2026-09-16T21:02:47.2293194-07:00"
                      }
                  ]
 }
