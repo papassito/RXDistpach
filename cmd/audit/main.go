@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -54,8 +55,13 @@ func eventHandler(w http.ResponseWriter, r *http.Request) {
 	dec.DisallowUnknownFields()
 
 	if err := dec.Decode(&req); err != nil {
-		if err.Error() == "http: request body too large" {
-			http.Error(w, "Request body must not be larger than 1MB", http.StatusRequestEntityTooLarge)
+		var maxBytesErr *http.MaxBytesError
+		if errors.As(err, &maxBytesErr) {
+			http.Error(
+				w,
+				http.StatusText(http.StatusRequestEntityTooLarge),
+				http.StatusRequestEntityTooLarge,
+			)
 			return
 		}
 		http.Error(w, "Invalid or malformed JSON payload", http.StatusBadRequest)
