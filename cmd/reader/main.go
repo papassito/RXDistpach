@@ -104,7 +104,7 @@ func (s *server) analyzeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 4. AuditorÃ­a (sÃ­ncrona, con manejo de errores)
-	event := models.AuditEventEPHI{
+	event := models.AuditEvent{
 		EventTimestamp:   time.Now().UTC(),
 		EventAction:      "GENERIC_READING_GENERATED",
 		EventOutcome:     "SUCCESS",

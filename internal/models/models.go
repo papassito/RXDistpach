@@ -24,7 +24,7 @@ type GenericReading struct {
 	Disclaimer       Disclaimer `json:"disclaimer"`
 }
 
-type AuditEventEPHI struct {
+type AuditEvent struct {
 	EventTimestamp     time.Time `json:"event_timestamp"`
 	EventAction        string    `json:"event_action"`
 	EventOutcome       string    `json:"event_outcome"`
