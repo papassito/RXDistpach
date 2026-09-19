@@ -35,15 +35,23 @@ RXDistpach/
 
 ---
 
-## Inicio Rápido
+## Verificación y Ejecución
 
 Requisito: Go 1.26.5 o posterior. Ejecutar desde la raíz del repositorio:
 
 ```powershell
-go test ./...
+# 1. Verificar código y ejecutar pruebas unitarias
+go test ./... -count=1
 go vet ./...
-go build ./...
-go run ./cmd/reader
+
+# 2. Compilar los 9 servicios
+.\scripts\build\build_all.ps1
+
+# 3. Iniciar todos los servicios en segundo plano
+.\scripts\run\run_services.ps1
+
+# 4. Detener todos los servicios
+.\scripts\run\stop_services.ps1
 ```
 
 Solo `reader` tiene una implementación inicial; los otros ocho servicios están planificados.

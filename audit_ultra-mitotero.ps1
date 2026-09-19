@@ -537,7 +537,9 @@ $Report = [PSCustomObject]@{
 }
 
 $ReportPath = Join-Path $RepoRoot "audit_report_ultra.json"
-$Report | ConvertTo-Json -Depth 10 | Set-Content -Path $ReportPath -Encoding UTF8
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+$jsonContent = $Report | ConvertTo-Json -Depth 10
+[System.IO.File]::WriteAllText($ReportPath, $jsonContent, $utf8NoBom)
 
 # ==============================================================================
 # RESUMEN EN CONSOLA
